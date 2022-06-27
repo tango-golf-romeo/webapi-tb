@@ -1,0 +1,50 @@
+<table class="login-table basic-background2">
+	<tr class="login-table-row"><td colspan="3" class="h40px">&nbsp;</td></tr>
+	<tr class="login-table-row">
+		<td class="login-table-cell w30pct">&nbsp;</td>
+		<td class="login-table-cell w40pct">
+			<mat-card class="maxw100pct">
+				<mat-card-header>
+					<div mat-card-avatar class="logon-avatar"></div>
+					<mat-card-title>Server Web API</mat-card-title>
+					<mat-card-subtitle>Test Bed</mat-card-subtitle>
+				</mat-card-header>
+				<img mat-card-image src="/assets/img/banner-maintenance.jpg" alt="Logon">
+				<mat-card-content>
+					<p>
+						<mat-form-field appearance="fill" class="w60pct">
+							<mat-icon matSuffix>person</mat-icon>
+							<mat-label>Username</mat-label>
+							<input id="txtUsername" type="text" [(ngModel)]="username" matInput required placeholder="Enter your username"
+							[formControl]="ctrlUsername">
+							<mat-error *ngIf="ctrlUsername.invalid">{{getErrorUsername()}}</mat-error>
+							<mat-hint>* denotes required field</mat-hint>
+						</mat-form-field>
+					</p>
+					<p>
+						<mat-form-field appearance="fill" class="w60pct">
+							<mat-icon matSuffix>vpn_key</mat-icon>
+							<mat-label>Password</mat-label>
+							<input id="txtPassword" type="password" [(ngModel)]="password" matInput placeholder="Enter your password"
+							[formControl]="ctrlPassword">
+							<mat-error *ngIf="ctrlPassword.invalid">{{getErrorPassword()}}</mat-error>
+							<mat-hint>You can click on the eye to show/hide the typed text.</mat-hint>
+						</mat-form-field>
+					</p>
+				</mat-card-content>
+				<mat-card-actions>
+					<button mat-button (click)="onClickSneak($event)">SNEAK</button>
+					<button mat-button (click)="onClickLogon($event)">LOGON</button>
+					<button mat-button (click)="onClickReset($event)">RESET</button>
+				</mat-card-actions>
+				<mat-card-footer>
+					<div [hidden]="!showProgress">
+						<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+					</div>
+				</mat-card-footer>
+			</mat-card>
+		</td>
+		<td class="login-table-cell w30pct">&nbsp;</td>
+	</tr>
+	<tr class="login-table-row"><td colspan="3" class="h40px">&nbsp;</td></tr>
+</table>

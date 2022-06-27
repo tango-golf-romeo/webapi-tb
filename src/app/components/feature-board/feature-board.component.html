@@ -1,0 +1,41 @@
+<mat-card class="dashboard-card">
+	<mat-card-header>
+		<div mat-card-avatar class="av-fault-log"></div>
+		<mat-card-title class="ws-nowrap">Fault Log</mat-card-title>
+		<mat-card-subtitle class="ws-nowrap">Shows system's faults.</mat-card-subtitle>
+	</mat-card-header>
+	<mat-card-actions>
+		<button mat-mini-fab color="primary" (click)="onClickFeature($event,'fault-log')">
+			<mat-icon>launch</mat-icon>
+			<span>START</span>
+		</button>
+	</mat-card-actions>
+</mat-card>
+
+<mat-card class="dashboard-card">
+	<mat-card-header>
+		<div mat-card-avatar class="av-event-log"></div>
+		<mat-card-title class="ws-nowrap">Event Log</mat-card-title>
+		<mat-card-subtitle class="ws-nowrap">Shows system's events.</mat-card-subtitle>
+	</mat-card-header>
+	<mat-card-actions>
+		<button mat-mini-fab color="primary" (click)="onClickFeature($event,'event-log')">
+			<mat-icon>launch</mat-icon>
+			<span>START</span>
+		</button>
+	</mat-card-actions>
+</mat-card>
+
+<mat-card class="dashboard-card">
+	<mat-card-header>
+		<div mat-card-avatar class="av-stub"></div>
+		<mat-card-title class="ws-nowrap">Stub</mat-card-title>
+		<mat-card-subtitle class="ws-nowrap">Stub.</mat-card-subtitle>
+	</mat-card-header>
+	<mat-card-actions>
+		<button mat-mini-fab color="primary" (click)="onClickFeature($event,'stub')">
+			<mat-icon>launch</mat-icon>
+			<span>START</span>
+		</button>
+	</mat-card-actions>
+</mat-card>

@@ -1,0 +1,72 @@
+<mat-drawer-container class="dashboard-container" autosize>
+	<mat-drawer #drawer class="dashboard-side" mode="side">
+		<mat-nav-list class="navlink-list">
+			<mat-list-item class="navlink-item">
+				<button mat-mini-fab color="primary" (click)="onClickFeature($event,'fault-log')">
+					<mat-icon>launch</mat-icon>
+					<span class="navlink-text">Fault Log</span>
+				</button>
+			</mat-list-item>
+			
+			<mat-list-item class="navlink-item">
+				<button mat-mini-fab color="primary" (click)="onClickFeature($event,'event-log')">
+					<mat-icon>launch</mat-icon>
+					<span class="navlink-text">Event Log</span>
+				</button>
+			</mat-list-item>
+
+			<mat-list-item class="navlink-item">
+				<button mat-mini-fab color="primary" (click)="onClickFeature($event,'stub')">
+					<mat-icon>launch</mat-icon>
+					<span class="navlink-text">Stub</span>
+				</button>
+			</mat-list-item>
+		</mat-nav-list>
+	</mat-drawer>
+
+	<mat-drawer-content class="dashboard-content">
+		<mat-toolbar color="primary" class="dashboard-toolbar">
+			<button mat-mini-fab color="primary" [ngStyle]="{transform:'scale(0.6)'}" class="dashboard-toggle"
+			(click)="onClickDashboardToggle($event)">
+				<mat-icon>{{drawer.opened?'keyboard_arrow_left':'keyboard_arrow_right'}}</mat-icon>
+			</button>
+			<button mat-icon-button [matMenuTriggerFor]="mainMenu">
+				<mat-icon>menu</mat-icon>
+			</button>
+			<span>{{title}}</span>
+			<span class="toolbar-spacer"></span>
+			<button mat-icon-button (click)="onClickHome($event)" title="Home">
+				<mat-icon>home</mat-icon>
+			</button>
+			<button mat-icon-button (click)="onClickSettings($event)" title="Settings">
+				<mat-icon>settings</mat-icon>
+			</button>
+			<button mat-icon-button (click)="onClickLogout($event)" title="Logout">
+				<mat-icon>exit_to_app</mat-icon>
+			</button>
+		</mat-toolbar>
+
+		<div class="dashboard-content-template">
+			<ng-template [cdkPortalOutlet]="feature" (attached)="onFeatureAttached($event)"></ng-template>
+		</div>
+	</mat-drawer-content>
+</mat-drawer-container>
+
+<mat-menu #mainMenu="matMenu">
+  <button mat-menu-item (click)="onClickHome($event)">
+		<mat-icon>home</mat-icon>
+		<span>Home</span>
+	</button>
+  <button mat-menu-item (click)="drawer.toggle()">
+		<mat-icon>apps</mat-icon>
+		<span class="ws-nowrap">Toggle Apps</span>
+	</button>
+  <button mat-menu-item (click)="onClickSettings($event)">
+		<mat-icon>settings</mat-icon>
+		<span>Settings</span>
+	</button>
+  <button mat-menu-item (click)="onClickLogout($event)">
+		<mat-icon>exit_to_app</mat-icon>
+		<span>Logout</span>
+	</button>
+</mat-menu>

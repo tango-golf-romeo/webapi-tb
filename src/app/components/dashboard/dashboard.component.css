@@ -1,0 +1,61 @@
+.dashboard-toolbar
+{
+	--dummy: null;
+	display: fixed;
+	width: 100% !important;
+	z-index: 1000;
+	/*justify-content: space-between;*/
+}
+
+.toolbar-spacer
+{
+  flex: 1 1 auto;
+}
+
+.dashboard-container
+{
+	--dummy: null;
+	height: 100%;
+}
+
+.dashboard-side
+{
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+	width: 220px;
+}
+
+.navlink-list
+{
+	--dummy: null;
+}
+
+.navlink-item
+{
+	margin-top: 20px
+}
+
+.navlink-text
+{
+	white-space: nowrap;
+	font-size: 14px;
+}
+
+.dashboard-toggle
+{
+	--dummy: null;
+}
+
+.dashboard-content
+{
+	--dummy: null;
+}
+
+.dashboard-content-template
+{
+	--dummy: null;
+	width: 100%;
+	max-width: 100%;
+}

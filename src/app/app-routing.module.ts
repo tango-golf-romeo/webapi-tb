@@ -1,10 +1,22 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule,Routes} from '@angular/router';
 
-const routes: Routes = [];
+import {LogonComponent} from './components/logon/logon.component';
+import {DashboardComponent} from './components/dashboard/dashboard.component';
+import {FaultLogComponent} from './components/fault-log/fault-log.component';
+import {EventLogComponent} from './components/event-log/event-log.component';
 
-@NgModule({
+const routes: Routes =
+[
+  {path:'logon', component:LogonComponent},
+  {path:'dashboard', component:DashboardComponent},
+  {path:'fault-log', component:FaultLogComponent},
+  {path:'event-log', component:EventLogComponent},
+];
+
+@NgModule
+({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

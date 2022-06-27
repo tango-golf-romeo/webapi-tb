@@ -1,0 +1,104 @@
+.w25pct
+{
+	width: 25%;
+}
+
+.w30pct
+{
+	width: 30%;
+}
+
+.w40pct
+{
+	width: 40%;
+}
+
+.w60pct
+{
+  width: 60%;
+}
+
+.w100pct
+{
+	width: 100%;
+}
+
+.h100pct
+{
+	height: 100%;
+}
+
+.h40px
+{
+	height: 40px;
+}
+
+.maxw100pct
+{
+  max-width: 100%;
+}
+
+.pad10px
+{
+	padding: 10px;
+}
+
+.pad40px
+{
+	padding: 40px;
+}
+
+.pad-left-4px
+{
+	padding-left: 4px;
+}
+
+.pad-left-10px
+{
+	padding-left: 10px;
+}
+
+.v-align-top
+{
+	vertical-align: top;
+}
+
+.v-align-bottom
+{
+	vertical-align: bottom;
+}
+
+.v-align-middle
+{
+	vertical-align: middle;
+}
+
+.ws-nowrap
+{
+	white-space: nowrap;
+}
+
+.display-none
+{
+	display: none;
+}
+
+.over-scroll
+{
+	overflow: scroll;
+}
+
+.fs-large
+{
+	font-size: large;
+}
+
+.margin40px
+{
+	margin: 40px;
+}
+
+.pos-fixed
+{
+	position: fixed;
+}
