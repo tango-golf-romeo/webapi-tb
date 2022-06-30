@@ -37,6 +37,7 @@ import {EventLogComponent} from './components/event-log/event-log.component';
 import {FaultLogComponent} from './components/fault-log/fault-log.component';
 import {FeatureBoardComponent} from './components/feature-board/feature-board.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
+import {ModuleTestsComponent} from './components/module-tests/module-tests.component';
 
 @NgModule
 ({
@@ -49,7 +50,8 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
     EventLogComponent,
     FaultLogComponent,
     FeatureBoardComponent,
-    DashboardComponent
+    DashboardComponent,
+    ModuleTestsComponent
   ],
   imports:
   [

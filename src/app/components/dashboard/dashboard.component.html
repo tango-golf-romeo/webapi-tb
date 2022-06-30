@@ -2,6 +2,13 @@
 	<mat-drawer #drawer class="dashboard-side" mode="side">
 		<mat-nav-list class="navlink-list">
 			<mat-list-item class="navlink-item">
+				<button mat-mini-fab color="primary" (click)="onClickFeature($event,'module-tests')">
+					<mat-icon>launch</mat-icon>
+					<span class="navlink-text">Module Tests</span>
+				</button>
+			</mat-list-item>
+
+			<mat-list-item class="navlink-item">
 				<button mat-mini-fab color="primary" (click)="onClickFeature($event,'fault-log')">
 					<mat-icon>launch</mat-icon>
 					<span class="navlink-text">Fault Log</span>

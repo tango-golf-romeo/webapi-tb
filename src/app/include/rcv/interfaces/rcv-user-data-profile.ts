@@ -1,4 +1,4 @@
-export interface IXmtUserSessionData
+export interface IRcvUserDataProfile
 {
 	get userID (): string;
 	get loginName (): string;

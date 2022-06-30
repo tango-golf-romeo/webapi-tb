@@ -1,7 +1,8 @@
 export enum ApiServices
 {
 	Login = 'Admin/Login',
-	Logout = 'Logout'
+	Logout = 'Logout',
+	Proc = 'Cleanup/Proc'
 }
 
 export class Constants

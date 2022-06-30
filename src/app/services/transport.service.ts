@@ -4,9 +4,8 @@ import {HttpClient,HttpHeaders,HttpErrorResponse,HttpResponse,HttpParams} from '
 import {Observable,OperatorFunction,of,catchError,tap,map,ObservableInput,retry} from 'rxjs';
 
 import {ApiServices,Constants} from '../include/base/classes/primal/constants';
-import {ActionResult} from '../include/base/classes/action-result';
 import {SessionService} from './session.service';
-import {ActionResultHttp} from '../include/base/classes/action-result-http';
+import {ActionResultHttp} from '../include/base/classes/rcv/action-result-http';
 
 @Injectable
 ({

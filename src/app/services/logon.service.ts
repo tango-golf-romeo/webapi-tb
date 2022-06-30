@@ -2,15 +2,16 @@ import {Injectable} from '@angular/core';
 
 import {catchError,of,tap,map,switchMap,Observable,OperatorFunction, retry} from 'rxjs';
 
-import {IXmtActionResult} from '../include/xmt/interfaces/xmt-action-result';
-import {IXmtActionResultLogon} from '../include/xmt/interfaces/xmt-action-result-logon';
-import {IXmtUserData} from '../include/xmt/interfaces/xmt-user-data';
-import {ActionResult} from '../include/base/classes/action-result';
 import {SessionService} from './session.service';
 import {TransportService} from './transport.service';
 import {ApiServices} from '../include/base/classes/primal/constants';
-import {ActionResultHttp} from '../include/base/classes/action-result-http';
-import {IBadLogin} from '../include/xmt/interfaces/xmt-bad-login';
+import {ActionResultHttp} from '../include/base/classes/rcv/action-result-http';
+
+import {IXmtLoginItem} from '../include/xmt/interfaces/xmt-login-item';
+import {IRcvUserDataResponseItem} from '../include/rcv/interfaces/rcv-user-data-response-item';
+import {IRcvBaseMessagesResponse} from '../include/rcv/interfaces/rcv-base-messages-response';
+import {IRcvMessagesLoginResponse} from '../include/rcv/interfaces/rcv-messages-login-response';
+import {IRcvMessagesSessionResponse} from '../include/rcv/interfaces/rcv-messages-session-response';
 
 @Injectable
 ({
@@ -24,20 +25,25 @@ export class LogonService
 
 	public logon (usr:string, pwd:string): Observable<boolean>
 	{
-	const data:object = {login:usr,password:pwd,target:''};
+	const data:IXmtLoginItem = {login:usr,password:pwd,target:''};
 
-		return this.comms.invokePost<IXmtUserData,IBadLogin>(ApiServices.Login,'CreateLogin',data).pipe
+		return this.comms.invokePost<IRcvUserDataResponseItem,IRcvBaseMessagesResponse>(ApiServices.Login,'CreateLogin',data).pipe
 		(
-			map((res:ActionResultHttp<IXmtUserData|IBadLogin>) =>
+			map((res:ActionResultHttp<IRcvUserDataResponseItem|IRcvBaseMessagesResponse>) =>
 			{
 				if (res?.result)
 				{
-				const usr:IXmtUserData = res?.payload as IXmtUserData;
+				const usr:IRcvUserDataResponseItem = res?.payload as IRcvUserDataResponseItem;
 					return true;
 				}
 				else
 				{
-				const bad:IBadLogin = res?.payload as IBadLogin;
+				const badLogin:IRcvMessagesLoginResponse = res?.payload as IRcvMessagesLoginResponse;
+					if (badLogin) return false;
+
+				const badSession:IRcvMessagesSessionResponse = res?.payload as IRcvMessagesSessionResponse;
+					if (badSession) return false;
+
 					return false;
 				}
 			}),

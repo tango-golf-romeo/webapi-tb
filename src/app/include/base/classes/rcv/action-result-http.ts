@@ -1,10 +1,9 @@
 import {HttpErrorResponse,HttpResponse} from '@angular/common/http';
-import {IXmtPayload} from '../../xmt/interfaces/xmt-payload';
 
 import {ActionResultPayload} from "./action-result-payload";
-import {PayloadBase} from "./payload-base";
+import {RcvPayloadBase} from "./rcv-payload-base";
 
-export class ActionResultHttp<T extends IXmtPayload|void> extends ActionResultPayload<T>
+export class ActionResultHttp<T extends RcvPayloadBase|void> extends ActionResultPayload<T>
 {
 private mResponse:HttpResponse<T>|null = null;
 private mError:HttpErrorResponse|null = null;

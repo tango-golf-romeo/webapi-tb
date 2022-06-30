@@ -1,6 +1,20 @@
 <mat-card class="dashboard-card">
 	<mat-card-header>
-		<div mat-card-avatar class="av-fault-log"></div>
+		<div mat-card-avatar class="av-base av-module-tests"></div>
+		<mat-card-title class="ws-nowrap">Module Tests</mat-card-title>
+		<mat-card-subtitle class="ws-nowrap">Run Web API module tests.</mat-card-subtitle>
+	</mat-card-header>
+	<mat-card-actions>
+		<button mat-mini-fab color="primary" (click)="onClickFeature($event,'module-tests')">
+			<mat-icon>launch</mat-icon>
+			<span>START</span>
+		</button>
+	</mat-card-actions>
+</mat-card>
+
+<mat-card class="dashboard-card">
+	<mat-card-header>
+		<div mat-card-avatar class="av-base av-fault-log"></div>
 		<mat-card-title class="ws-nowrap">Fault Log</mat-card-title>
 		<mat-card-subtitle class="ws-nowrap">Shows system's faults.</mat-card-subtitle>
 	</mat-card-header>
@@ -14,7 +28,7 @@
 
 <mat-card class="dashboard-card">
 	<mat-card-header>
-		<div mat-card-avatar class="av-event-log"></div>
+		<div mat-card-avatar class="av-base av-event-log"></div>
 		<mat-card-title class="ws-nowrap">Event Log</mat-card-title>
 		<mat-card-subtitle class="ws-nowrap">Shows system's events.</mat-card-subtitle>
 	</mat-card-header>
@@ -28,7 +42,7 @@
 
 <mat-card class="dashboard-card">
 	<mat-card-header>
-		<div mat-card-avatar class="av-stub"></div>
+		<div mat-card-avatar class="av-base av-stub"></div>
 		<mat-card-title class="ws-nowrap">Stub</mat-card-title>
 		<mat-card-subtitle class="ws-nowrap">Stub.</mat-card-subtitle>
 	</mat-card-header>

@@ -2,7 +2,7 @@ import {Component,OnInit,AfterViewInit,ComponentRef,ViewChild} from '@angular/co
 import {Router} from '@angular/router';
 
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
-import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog,MatDialogConfig,MatDialogRef} from '@angular/material/dialog';
 import {MatDrawer} from '@angular/material/sidenav';
 import {CdkPortalOutlet,ComponentPortal,Portal,CdkPortalOutletAttachedRef} from '@angular/cdk/portal';
 
@@ -15,6 +15,7 @@ import {FaultLogComponent} from '../fault-log/fault-log.component';
 import {EventLogComponent} from '../event-log/event-log.component';
 import {DialogComponent} from '../dialog/dialog.component';
 import {HostedComponent} from '../hosted/hosted.component';
+import {ModuleTestsComponent} from '../module-tests/module-tests.component';
 
 @Component
 ({
@@ -149,6 +150,11 @@ export class DashboardComponent extends HostedComponent implements OnInit, After
 			else if ((s == 'dashboard') || (s == 'applications'))
 			{
 			const cmp:Portal<any> = new ComponentPortal(FeatureBoardComponent);
+				this.feature = cmp;
+			}
+			else if (s == 'module-tests')
+			{
+			const cmp:Portal<any> = new ComponentPortal(ModuleTestsComponent);
 				this.feature = cmp;
 			}
 			else

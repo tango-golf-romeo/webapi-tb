@@ -6,20 +6,27 @@
 	display: inline-block;
 }
 
+.av-base
+{
+  background-size: cover;
+}
+
+.av-module-tests
+{
+  background-image: url('/assets/img/av-test.png');
+}
+
 .av-fault-log
 {
   background-image: url('/assets/img/av-fault.png');
-  background-size: cover;
 }
 
 .av-event-log
 {
   background-image: url('/assets/img/av-event.png');
-  background-size: cover;
 }
 
 .av-stub
 {
   background-image: url('/assets/img/av-stub.png');
-  background-size: cover;
 }

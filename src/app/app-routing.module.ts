@@ -5,6 +5,7 @@ import {LogonComponent} from './components/logon/logon.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {FaultLogComponent} from './components/fault-log/fault-log.component';
 import {EventLogComponent} from './components/event-log/event-log.component';
+import {ModuleTestsComponent} from './components/module-tests/module-tests.component';
 
 const routes: Routes =
 [
@@ -12,6 +13,7 @@ const routes: Routes =
   {path:'dashboard', component:DashboardComponent},
   {path:'fault-log', component:FaultLogComponent},
   {path:'event-log', component:EventLogComponent},
+  {path:'module-tests', component:ModuleTestsComponent},
 ];
 
 @NgModule

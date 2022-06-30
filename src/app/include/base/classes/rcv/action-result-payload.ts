@@ -1,8 +1,7 @@
-import {IXmtPayload} from "../../xmt/interfaces/xmt-payload";
 import {ActionResultBase} from "./action-result-base";
-import {PayloadBase} from "./payload-base";
+import {RcvPayloadBase} from "./rcv-payload-base";
 
-export class ActionResultPayload<T extends IXmtPayload|void> extends ActionResultBase
+export class ActionResultPayload<T extends RcvPayloadBase|void> extends ActionResultBase
 {
 private mPayload:T|null = null;
 
