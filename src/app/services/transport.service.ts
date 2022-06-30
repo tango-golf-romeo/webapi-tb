@@ -13,8 +13,6 @@ import {ActionResultHttp} from '../include/base/classes/rcv/action-result-http';
 })
 export class TransportService
 {
-private static IdHeader:string = 'idcwebapi-id';
-
 private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpress:Constants.HttpRootDevKestrel) +
 	`${Constants.RelativePathWebApi}/`;
   
@@ -33,7 +31,7 @@ private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpres
 		
 		return this.http.post<HttpResponse<SUCCESS|FAILURE>>(sPath,input,this.getOptions()).pipe
 		(
-			retry(1),
+			retry(0),
 			map((resp:HttpResponse<SUCCESS|FAILURE>) => ActionResultHttp.Create(resp)),
 			catchError(this.handleError<FAILURE>())
 		);
@@ -56,7 +54,7 @@ private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpres
 
 		return this.http.get<HttpResponse<SUCCESS|FAILURE>>(sPath,this.getOptions()).pipe
 		(
-			retry(1),
+			retry(0),
 			map((resp:HttpResponse<SUCCESS|FAILURE>) => ActionResultHttp.Create(resp)),
 			catchError(this.handleError<FAILURE>())
 		);
@@ -68,7 +66,7 @@ private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpres
 		
 		return this.http.put<HttpResponse<SUCCESS|FAILURE>>(sPath,input,this.getOptions()).pipe
 		(
-			retry(1),
+			retry(0),
 			map((resp:HttpResponse<SUCCESS|FAILURE>) => ActionResultHttp.Create(resp)),
 			catchError(this.handleError<FAILURE>())
 		);
@@ -91,10 +89,7 @@ private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpres
 
 	private getHeaders (): HttpHeaders
 	{
-		if (this.session.id.length)
-			return new HttpHeaders().set(TransportService.IdHeader,this.session.id);
-		else
-			return new HttpHeaders();
+		return new HttpHeaders();
 	}
 
 	private handleError<T> (): OperatorFunction<T,any>

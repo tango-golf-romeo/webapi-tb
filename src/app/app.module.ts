@@ -3,6 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {HttpClientXsrfModule,HTTP_INTERCEPTORS,HttpXsrfTokenExtractor} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {PortalModule} from '@angular/cdk/portal';
@@ -27,6 +28,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTooltipModule} from '@angular/material/tooltip';
+
+import {AuthInterceptor,HttpXsrfCookieExtractor/*,XSRF_COOKIE_NAME,XSRF_HEADER_NAME*/} from './interceptors/auth.interceptor';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -60,6 +63,11 @@ import {ModuleTestsComponent} from './components/module-tests/module-tests.compo
 		FormsModule,
 		ReactiveFormsModule,
 		HttpClientModule,
+		HttpClientXsrfModule.withOptions(
+		{
+			cookieName: 'access_token',
+			headerName: 'X-XSRF-TOKEN'
+		}),
     BrowserAnimationsModule,
 		PortalModule,
 		ScrollingModule,
@@ -83,7 +91,13 @@ import {ModuleTestsComponent} from './components/module-tests/module-tests.compo
 		MatExpansionModule,
 		MatTooltipModule
   ],
-  providers: [],
+  providers:
+	[
+		{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+		{provide: HttpXsrfTokenExtractor, useClass: HttpXsrfCookieExtractor}//,
+		//{provide: XSRF_COOKIE_NAME},
+		//{provide: XSRF_HEADER_NAME}
+	],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
