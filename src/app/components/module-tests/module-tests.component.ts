@@ -18,7 +18,7 @@ import {TestService} from 'src/app/services/test.service';
 })
 export class ModuleTestsComponent extends HostedComponent implements OnInit
 {
-private static readonly Name:string = 'Fault Log';
+private static readonly Name:string = 'Module Tests';
 
   constructor (rt:Router, svcLogon:LogonService, ctrlBottomSheet:MatBottomSheet, dlg: MatDialog, private test:TestService)
   {
@@ -34,7 +34,7 @@ private static readonly Name:string = 'Fault Log';
 	{
 		this.showProgress = true;
 
-		this.test.update(6343137,22,220000).subscribe
+		this.test.update(2151103,22,220000).subscribe
 		({
 			next: res =>
 			{

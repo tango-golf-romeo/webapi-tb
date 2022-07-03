@@ -33,7 +33,6 @@ export class LogonService
 			{
 				if (res?.result)
 				{
-				const cookies:string[]|null|undefined = res.response?.headers?.getAll('Set-Cookie:');
 				const usr:IRcvUserDataResponseItem = res?.payload as IRcvUserDataResponseItem;
 					return true;
 				}

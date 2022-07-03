@@ -84,7 +84,11 @@ private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpres
 
 	private getOptions (): object
 	{
-		return {headers:this.getHeaders(),observe:'response'};
+		return {
+			headers: this.getHeaders(),
+			observe: 'response',
+			withCredentials: true
+		};
 	}
 
 	private getHeaders (): HttpHeaders
