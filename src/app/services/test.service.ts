@@ -10,6 +10,9 @@ import {ActionResultHttp} from '../include/base/classes/rcv/action-result-http';
 import {IXmtProcSetItem} from '../include/xmt/interfaces/xmt-proc-set-item';
 import {IRcvProcResponseItem} from '../include/rcv/interfaces/rcv-proc-response-item';
 import {IRcvMessagesResponse} from '../include/rcv/interfaces/rcv-messages-response';
+import {AppStatePanelService} from './app/app-state-panel.service';
+import {IXmtStatePanelSetItem} from '../include/xmt/interfaces/xmt-state-panel-set-item';
+import {IRcvStatePanelResponseItem} from '../include/rcv/interfaces/rcv-state-panel-response-item';
 
 @Injectable
 ({
@@ -17,7 +20,7 @@ import {IRcvMessagesResponse} from '../include/rcv/interfaces/rcv-messages-respo
 })
 export class TestService
 {
-  constructor (private comms:TransportService)
+  constructor (private comms:TransportService, private statePanel:AppStatePanelService)
   {
   }
 
@@ -42,8 +45,25 @@ export class TestService
 			}),
 			catchError(this.handleError<boolean>(false))
 		);
+	}
 
-    return of(true);
+	public testStatePanel (): Observable<boolean>
+	{
+	const sp:IXmtStatePanelSetItem = {name:'my panel',description:'my set panel'};
+		return this.statePanel.apply(sp).pipe
+		(
+			map((res:IRcvStatePanelResponseItem|IRcvMessagesResponse|null) =>
+			{
+			const newSp:IRcvStatePanelResponseItem = res as IRcvStatePanelResponseItem;
+				if (newSp)
+				{
+					return true;
+				}
+
+				return false;
+			}),
+			catchError(this.handleError<boolean>(false))
+		);
 	}
 
 	private handleError<T> (res?:T): OperatorFunction<T,any>

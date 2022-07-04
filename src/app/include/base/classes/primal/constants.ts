@@ -2,7 +2,9 @@ export enum ApiServices
 {
 	Login = 'Admin/Login',
 	Logout = 'Logout',
-	Proc = 'Cleanup/Proc'
+	Mosaic = 'Frontend/Mosaic',
+	Proc = 'Cleanup/Proc',
+	StatePanel = 'Frontend/StatePanel'
 }
 
 export class Constants

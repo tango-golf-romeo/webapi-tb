@@ -34,6 +34,27 @@ private static readonly Name:string = 'Module Tests';
 	{
 		this.showProgress = true;
 
+		this.test.testStatePanel().subscribe
+		({
+			next: res =>
+			{
+				if (res)
+          this.flashError('Test succesfull.');
+				else
+					this.flashError('Test failed.');
+			},
+			error: (err:any) => {console.error(err)},
+			complete: () =>
+			{
+				this.showProgress = false;
+			}
+		});
+	}
+
+	onClickTest2 (event:any): void
+	{
+		this.showProgress = true;
+
 		this.test.update(2151103,22,220000).subscribe
 		({
 			next: res =>
