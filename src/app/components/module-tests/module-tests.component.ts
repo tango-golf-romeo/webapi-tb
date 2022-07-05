@@ -9,6 +9,8 @@ import {MatDialog,MatDialogConfig} from '@angular/material/dialog';
 import {HostedComponent} from '../hosted/hosted.component';
 import {LogonService} from 'src/app/services/logon.service';
 import {TestService} from 'src/app/services/test.service';
+import {bootstrapApplication} from '@angular/platform-browser';
+import {publishBehavior} from 'rxjs';
 
 @Component
 ({
@@ -34,7 +36,11 @@ private static readonly Name:string = 'Module Tests';
 	{
 		this.showProgress = true;
 
-		this.test.testStatePanel().subscribe
+ 		const pb:Promise<boolean> = this.test.testMosaicStatePanel();
+
+		this.showProgress = false;
+
+		/*this.test.testMosaicStatePanel().subscribe
 		({
 			next: res =>
 			{
@@ -48,7 +54,7 @@ private static readonly Name:string = 'Module Tests';
 			{
 				this.showProgress = false;
 			}
-		});
+		});*/
 	}
 
 	onClickTest2 (event:any): void

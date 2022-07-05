@@ -20,7 +20,7 @@ export class AppStatePanelService
   {
   }
 
-	public apply (obj:IXmtStatePanelSetItem): Observable<IRcvStatePanelResponseItem|IRcvMessagesResponse|null>
+	public invoke_apply (obj:IXmtStatePanelSetItem): Observable<IRcvStatePanelResponseItem|IRcvMessagesResponse|null>
 	{
 	const data:IXmtStatePanelSetItem = obj;
 
@@ -29,6 +29,20 @@ export class AppStatePanelService
 			map((res:ActionResultHttp<IRcvStatePanelResponseItem|IRcvMessagesResponse>) =>
 			{
         return res.payload;
+			}),
+			catchError(this.handleError<IRcvStatePanelResponseItem|null>(null))
+		);
+	}
+
+	public invokeApply (obj:IXmtStatePanelSetItem): Observable<IRcvStatePanelResponseItem|null>
+	{
+		return this.invoke_apply(obj).pipe
+		(
+			map((res:IRcvStatePanelResponseItem|IRcvMessagesResponse|null) =>
+			{
+			const fail:IRcvMessagesResponse = res as IRcvMessagesResponse;
+			const ret:IRcvStatePanelResponseItem = res as IRcvStatePanelResponseItem;
+				return ret;
 			}),
 			catchError(this.handleError<IRcvStatePanelResponseItem|null>(null))
 		);

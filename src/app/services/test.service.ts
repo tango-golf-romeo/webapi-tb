@@ -1,6 +1,6 @@
 import {Injectable, SimpleChange } from '@angular/core';
 
-import {catchError,of,tap,map,switchMap,Observable,OperatorFunction, retry} from 'rxjs';
+import {catchError,of,tap,map,switchMap,Observable,OperatorFunction, retry, lastValueFrom} from 'rxjs';
 
 import {SessionService} from './session.service';
 import {TransportService} from './transport.service';
@@ -47,23 +47,17 @@ export class TestService
 		);
 	}
 
-	public testStatePanel (): Observable<boolean>
+	public async testMosaicStatePanel (): Promise<boolean>
 	{
-	const sp:IXmtStatePanelSetItem = {name:'my panel',description:'my set panel'};
-		return this.statePanel.apply(sp).pipe
-		(
-			map((res:IRcvStatePanelResponseItem|IRcvMessagesResponse|null) =>
-			{
-			const newSp:IRcvStatePanelResponseItem = res as IRcvStatePanelResponseItem;
-				if (newSp)
-				{
-					return true;
-				}
+	const sp1:IXmtStatePanelSetItem = {name:'my panel 1',description:'my set panel 1'};
+	const sp2:IXmtStatePanelSetItem = {name:'my panel 2',description:'my set panel 2'};
+	const sp3:IXmtStatePanelSetItem = {name:'my panel 3',description:'my set panel 3'};
+	
+	let b = await lastValueFrom (this.statePanel.invokeApply(sp1));
+		b = await lastValueFrom (this.statePanel.invokeApply(sp1));
+		b = await lastValueFrom (this.statePanel.invokeApply(sp1));
 
-				return false;
-			}),
-			catchError(this.handleError<boolean>(false))
-		);
+		return true;
 	}
 
 	private handleError<T> (res?:T): OperatorFunction<T,any>
