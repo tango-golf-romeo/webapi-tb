@@ -36,9 +36,19 @@ private static readonly Name:string = 'Module Tests';
 	{
 		this.showProgress = true;
 
- 		const pb:Promise<boolean> = this.test.testMosaicStatePanel();
-
-		this.showProgress = false;
+ 		const test:Promise<boolean> = this.test.doTest();
+		test.then(success =>
+		{
+			console.log(success);
+		})
+		.catch(err =>
+		{
+			console.log(err)
+		})
+		.finally(() =>
+		{
+			this.showProgress = false;
+		});
 
 		/*this.test.testMosaicStatePanel().subscribe
 		({

@@ -72,12 +72,30 @@ private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpres
 		);
 	}
 
-	private getPath (svc:ApiServices, op:string|null): string
+	public invokeDelete<SUCCESS,FAILURE> (svc:ApiServices, op:string|null, id:string|null = null): Observable<ActionResultHttp<SUCCESS|FAILURE>>
+	{
+	const sPath:string = this.getPath(svc,op);
+		
+		return this.http.delete<HttpResponse<SUCCESS|FAILURE>>(sPath,this.getOptions()).pipe
+		(
+			retry(0),
+			map((resp:HttpResponse<SUCCESS|FAILURE>) => ActionResultHttp.Create(resp)),
+			catchError(this.handleError<FAILURE>())
+		);
+	}
+
+	private getPath (svc:ApiServices, op:string|null, id:string|null = null): string
 	{
 	const sOper:string = (op ?? '').trim();
+	const sId:string = (id ?? '').trim();
 	
 	let ret:string = `${this.apiPath}${svc}/`;
 		if (sOper.length > 0) ret += `${sOper}`;
+		if (sId.length > 0)
+		{
+			if (sOper.length > 0) ret += '/';
+			ret += `${sId}`;
+		}
 
 		return ret;
 	}

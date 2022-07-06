@@ -3,6 +3,7 @@ export enum ApiServices
 	Login = 'Admin/Login',
 	Logout = 'Logout',
 	Mosaic = 'Frontend/Mosaic',
+	Node = 'Probe/Node',
 	Proc = 'Cleanup/Proc',
 	StatePanel = 'Frontend/StatePanel'
 }

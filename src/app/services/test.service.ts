@@ -13,6 +13,9 @@ import {IRcvMessagesResponse} from '../include/rcv/interfaces/rcv-messages-respo
 import {AppStatePanelService} from './app/app-state-panel.service';
 import {IXmtStatePanelSetItem} from '../include/xmt/interfaces/xmt-state-panel-set-item';
 import {IRcvStatePanelResponseItem} from '../include/rcv/interfaces/rcv-state-panel-response-item';
+import {IXmtNodeSetItem} from '../include/xmt/interfaces/ixmt-node-set-item';
+import {AppNodeService} from './app/app-node.service';
+import {IRcvNodeResponseItem} from '../include/rcv/interfaces/ircv-node-response-item';
 
 @Injectable
 ({
@@ -20,7 +23,7 @@ import {IRcvStatePanelResponseItem} from '../include/rcv/interfaces/rcv-state-pa
 })
 export class TestService
 {
-  constructor (private comms:TransportService, private statePanel:AppStatePanelService)
+  constructor (private comms:TransportService, private statePanel:AppStatePanelService, private node:AppNodeService)
   {
   }
 
@@ -57,6 +60,52 @@ export class TestService
 		b = await lastValueFrom (this.statePanel.invokeApply(sp1));
 		b = await lastValueFrom (this.statePanel.invokeApply(sp1));
 
+		return true;
+	}
+
+	private async createNodes (): Promise<IRcvNodeResponseItem[]>
+	{
+	const xmtNode1:IXmtNodeSetItem = {name:'node 1',description:'my node 1',nodeType:'multiScreen',ipAddress:'127.0.0.1'};
+	const xmtNode2:IXmtNodeSetItem = {name:'node 2',description:'my node 2',nodeType:'multiScreen',ipAddress:'127.0.0.1'};
+	const xmtNode3:IXmtNodeSetItem = {name:'node 3',description:'my node 3',nodeType:'multiScreen',ipAddress:'127.0.0.1'};
+
+	const rcvNode1:IRcvNodeResponseItem|null = await lastValueFrom(this.node.invokeApply(xmtNode1));
+	const rcvNode2:IRcvNodeResponseItem|null = await lastValueFrom(this.node.invokeApply(xmtNode2));
+	const rcvNode3:IRcvNodeResponseItem|null = await lastValueFrom(this.node.invokeApply(xmtNode3));
+
+	const ret = new Array();
+		if (rcvNode1) ret.push(rcvNode1);
+		if (rcvNode2) ret.push(rcvNode2);
+		if (rcvNode3) ret.push(rcvNode3);
+
+		return ret;
+	}
+
+	private async deleteNodes (ids:IRcvNodeResponseItem[]): Promise<void>
+	{
+		ids.forEach(async n => 
+		{
+			await lastValueFrom(this.node.invokeDelete(n.nodeID));
+		});
+	}
+
+	private async testNodes (): Promise<void>
+	{
+	const nodes:IRcvNodeResponseItem[] = await this.createNodes();
+		await this.deleteNodes(nodes);		
+	}
+
+	public async doTest (): Promise<boolean>
+	{
+		try
+		{
+			await this.testNodes();
+		}
+		catch (x)
+		{
+			console.log(x);
+		}
+		
 		return true;
 	}
 
