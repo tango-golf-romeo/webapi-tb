@@ -1,6 +1,4 @@
-import {IRcvPayloadBase} from '../../base/interfaces/rcv/rcv-payload-base';
-
-export interface IXmtLoginItem extends IRcvPayloadBase
+export interface IXmtLoginItem
 {
 	get login (): string;
 	get password (): string;

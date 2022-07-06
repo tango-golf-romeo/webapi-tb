@@ -9,9 +9,9 @@ import {ActionResultHttp} from '../include/base/classes/rcv/action-result-http';
 
 import {IXmtLoginItem} from '../include/xmt/interfaces/xmt-login-item';
 import {IRcvUserDataResponseItem} from '../include/rcv/interfaces/rcv-user-data-response-item';
-import {IRcvBaseMessagesResponse} from '../include/rcv/interfaces/rcv-base-messages-response';
 import {IRcvMessagesLoginResponse} from '../include/rcv/interfaces/rcv-messages-login-response';
 import {IRcvMessagesSessionResponse} from '../include/rcv/interfaces/rcv-messages-session-response';
+import {IAppBaseMessagesResponse} from '../include/app/base/interfaces/iapp-base-messages-response';
 
 @Injectable
 ({
@@ -27,9 +27,9 @@ export class LogonService
 	{
 	const data:IXmtLoginItem = {login:usr,password:pwd,target:''};
 
-		return this.comms.invokePost<IRcvUserDataResponseItem,IRcvBaseMessagesResponse>(ApiServices.Login,'CreateLogin',data).pipe
+		return this.comms.invokePost<IRcvUserDataResponseItem,IAppBaseMessagesResponse>(ApiServices.Login,'CreateLogin',data).pipe
 		(
-			map((res:ActionResultHttp<IRcvUserDataResponseItem|IRcvBaseMessagesResponse>) =>
+			map((res:ActionResultHttp<IRcvUserDataResponseItem|IAppBaseMessagesResponse>) =>
 			{
 				if (res?.result)
 				{

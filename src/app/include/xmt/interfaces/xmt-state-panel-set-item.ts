@@ -1,6 +1,4 @@
-import {IRcvPayloadBase} from "../../base/interfaces/rcv/rcv-payload-base";
-
-export interface IXmtStatePanelSetItem extends IRcvPayloadBase
+export interface IXmtStatePanelSetItem
 {
 	$type?: string;
 	get name (): string;

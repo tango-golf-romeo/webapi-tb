@@ -9,13 +9,14 @@ import {ActionResultHttp} from '../include/base/classes/rcv/action-result-http';
 
 import {IXmtProcSetItem} from '../include/xmt/interfaces/xmt-proc-set-item';
 import {IRcvProcResponseItem} from '../include/rcv/interfaces/rcv-proc-response-item';
-import {IRcvMessagesResponse} from '../include/rcv/interfaces/rcv-messages-response';
+import {IRcvMessagesResponse} from '../include/rcv/interfaces/ircv-messages-response';
 import {AppStatePanelService} from './app/app-state-panel.service';
 import {IXmtStatePanelSetItem} from '../include/xmt/interfaces/xmt-state-panel-set-item';
 import {IRcvStatePanelResponseItem} from '../include/rcv/interfaces/rcv-state-panel-response-item';
 import {IXmtNodeSetItem} from '../include/xmt/interfaces/ixmt-node-set-item';
 import {AppNodeService} from './app/app-node.service';
 import {IRcvNodeResponseItem} from '../include/rcv/interfaces/ircv-node-response-item';
+import {XmtNodeSetItem} from '../include/xmt/classes/xmt-node-set-item';
 
 @Injectable
 ({
@@ -65,18 +66,18 @@ export class TestService
 
 	private async createNodes (): Promise<IRcvNodeResponseItem[]>
 	{
-	const xmtNode1:IXmtNodeSetItem = {name:'node 1',description:'my node 1',nodeType:'multiScreen',ipAddress:'127.0.0.1'};
-	const xmtNode2:IXmtNodeSetItem = {name:'node 2',description:'my node 2',nodeType:'multiScreen',ipAddress:'127.0.0.1'};
-	const xmtNode3:IXmtNodeSetItem = {name:'node 3',description:'my node 3',nodeType:'multiScreen',ipAddress:'127.0.0.1'};
-
-	const rcvNode1:IRcvNodeResponseItem|null = await lastValueFrom(this.node.invokeApply(xmtNode1));
-	const rcvNode2:IRcvNodeResponseItem|null = await lastValueFrom(this.node.invokeApply(xmtNode2));
-	const rcvNode3:IRcvNodeResponseItem|null = await lastValueFrom(this.node.invokeApply(xmtNode3));
+	const xmtNode1:XmtNodeSetItem = new XmtNodeSetItem(2000,'tgu 2000','tgu node 40000');
+	const xmtNode2:XmtNodeSetItem = new XmtNodeSetItem(2001,'tgu 2001','tgu node 40001');
+	const xmtNode3:XmtNodeSetItem = new XmtNodeSetItem(2002,'tgu 2002','tgu node 40002');
+	
+	const res1 = await lastValueFrom(this.node.apply(xmtNode1));
+	const res2 = await lastValueFrom(this.node.apply(xmtNode2));
+	const res3 = await lastValueFrom(this.node.apply(xmtNode3));
 
 	const ret = new Array();
-		if (rcvNode1) ret.push(rcvNode1);
-		if (rcvNode2) ret.push(rcvNode2);
-		if (rcvNode3) ret.push(rcvNode3);
+		if (res1?.result) ret.push(res1.payload);
+		if (res2?.result) ret.push(res1.payload);
+		if (res3?.result) ret.push(res1.payload);
 
 		return ret;
 	}

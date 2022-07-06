@@ -1,6 +1,4 @@
-import {IRcvPayloadBase} from "../../base/interfaces/rcv/rcv-payload-base";
-
-export interface IRcvStatePanelResponseItem extends IRcvPayloadBase
+export interface IRcvStatePanelResponseItem
 {
 	get $type (): string;
 	get name (): string;

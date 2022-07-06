@@ -4,7 +4,7 @@ import {catchError,of,tap,map,switchMap,Observable,OperatorFunction, retry} from
 
 import {ApiServices} from 'src/app/include/base/classes/primal/constants';
 import {ActionResultHttp} from 'src/app/include/base/classes/rcv/action-result-http';
-import {IRcvMessagesResponse} from 'src/app/include/rcv/interfaces/rcv-messages-response';
+import {IRcvMessagesResponse} from 'src/app/include/rcv/interfaces/ircv-messages-response';
 import {IRcvStatePanelResponseItem} from 'src/app/include/rcv/interfaces/rcv-state-panel-response-item';
 import {IXmtStatePanelSetItem} from 'src/app/include/xmt/interfaces/xmt-state-panel-set-item';
 

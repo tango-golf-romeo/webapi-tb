@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient,HttpHeaders,HttpErrorResponse,HttpResponse,HttpParams} from '@angular/common/http';
 
-import {Observable,OperatorFunction,of,catchError,tap,map,ObservableInput,retry} from 'rxjs';
+import {Observable,OperatorFunction,of,catchError,tap,map,ObservableInput,retry, throwError} from 'rxjs';
 
 import {ApiServices,Constants} from '../include/base/classes/primal/constants';
 import {SessionService} from './session.service';
@@ -118,8 +118,9 @@ private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpres
 	{
 		return (err:any): Observable<ActionResultHttp<T>> =>
 		{
-		const ret:ActionResultHttp<T> = ActionResultHttp.CreateError<T>(err);
 			console.error(err);
+
+		const ret:ActionResultHttp<T> = ActionResultHttp.CreateError<T>(err);
 			return of(ret);
 		};
 	}
