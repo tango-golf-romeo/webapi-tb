@@ -1,18 +1,15 @@
 import {Injectable} from '@angular/core';
 
-import {catchError,of,tap,map,switchMap,Observable,OperatorFunction, retry} from 'rxjs';
+import {catchError,of,tap,map,switchMap,Observable,OperatorFunction, retry, lastValueFrom} from 'rxjs';
 
 import {ApiServices} from 'src/app/include/base/classes/primal/constants';
 import {ActionResultHttp} from 'src/app/include/base/classes/rcv/action-result-http';
-import {IRcvMessagesResponse} from 'src/app/include/rcv/interfaces/ircv-messages-response';
 import {IXmtNodeSetItem} from 'src/app/include/xmt/interfaces/ixmt-node-set-item';
-import {IRcvNodeResponseItem} from 'src/app/include/rcv/interfaces/ircv-node-response-item';
 
-import {TransportService} from '../transport.service';
-import {XmtNodeSetItem} from 'src/app/include/xmt/classes/xmt-node-set-item';
+import {TransportService} from '../sys/transport.service';
 import {RcvNodeResponseItem} from 'src/app/include/rcv/classes/rcv-node-response-item';
 import {RcvMessagesResponse} from 'src/app/include/rcv/classes/rcv-messages-response';
-import {ActionResultPayload} from 'src/app/include/base/classes/rcv/action-result-payload';
+import {AppActionResult} from 'src/app/include/base/classes/rcv/app-action-result';
 
 @Injectable
 ({
@@ -24,7 +21,7 @@ export class AppNodeService
   {
   }
 
-	public apply (obj:IXmtNodeSetItem): Observable<ActionResultPayload<RcvNodeResponseItem|RcvMessagesResponse>>
+	public apply (obj:IXmtNodeSetItem): Observable<AppActionResult<RcvNodeResponseItem,RcvMessagesResponse>>
 	{
 	const data:IXmtNodeSetItem = obj;
 
@@ -32,55 +29,44 @@ export class AppNodeService
 		(
 			map((res:ActionResultHttp<RcvNodeResponseItem|RcvMessagesResponse>) =>
 			{
-        return res;
+			const ret:AppActionResult<RcvNodeResponseItem,RcvMessagesResponse> =
+				new AppActionResult<RcvNodeResponseItem,RcvMessagesResponse>(res);
+        return ret;
 			}),
-			catchError(this.handleError<ActionResultPayload<any>>())
+			catchError(this.handleError<AppActionResult<void,any>>())
 		);
 	}
 
-	/*public invokeApply (obj:IXmtNodeSetItem): Observable<RcvNodeResponseItem|null>
+	public async applyAsync (obj:IXmtNodeSetItem): Promise<AppActionResult<RcvNodeResponseItem,RcvMessagesResponse>>
 	{
-		return this.invoke_apply(obj).pipe
-		(
-			map((res:RcvNodeResponseItem|RcvMessagesResponse|null) =>
-			{
-				if (res instanceof RcvNodeResponseItem)
-				{
-				const ret:RcvNodeResponseItem = res as RcvNodeResponseItem;
-					return ret;
-				}
+		return await lastValueFrom(this.apply(obj));
+	}
 
-				if (res instanceof RcvMessagesResponse)
-				{
-				const ret:RcvMessagesResponse = res as RcvMessagesResponse;
-					return null;
-				}
-			
-				return null;
-			}),
-			catchError(this.handleError<ActionResultPayload<any>>())
-		);
-	}*/
-
-	public invokeDelete (id:number): Observable<ActionResultPayload<boolean|RcvMessagesResponse>>
+	public delete (id:number): Observable<AppActionResult<void,RcvMessagesResponse>>
 	{
-		return this.comms.invokeDelete<boolean,RcvMessagesResponse>(ApiServices.Node,'Delete',id.toString()).pipe
+		return this.comms.invokeDelete<void,RcvMessagesResponse>(ApiServices.Node,'Delete',id.toString()).pipe
 		(
-			map((res:ActionResultHttp<boolean|RcvMessagesResponse>) =>
+			map((res:ActionResultHttp<void|RcvMessagesResponse>) =>
 			{
-        return res;
+			const ret:AppActionResult<void,RcvMessagesResponse> = new AppActionResult<void,RcvMessagesResponse>(res);
+        return ret;
 			}),
-			catchError(this.handleError<ActionResultPayload<any>>())
+			catchError(this.handleError<AppActionResult<void,any>>())
 		);
+	}
+
+	public async deleteAsync (id:number): Promise<AppActionResult<void,RcvMessagesResponse>>
+	{
+		return await lastValueFrom(this.delete(id));
 	}
 
 	private handleError<T> (): OperatorFunction<T,any>
 	{
-		return (err:any): Observable<ActionResultPayload<any>> =>
+		return (err:any): Observable<AppActionResult<void,any>> =>
 		{
 			console.error(err);
 
-		const ret:ActionResultPayload<any> = new ActionResultPayload(false,err);
+		const ret:AppActionResult<void,any> = new AppActionResult<void,any>(null,err);
 			return of(ret);
 		};
 	}

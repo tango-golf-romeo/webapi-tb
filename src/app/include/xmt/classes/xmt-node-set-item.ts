@@ -3,7 +3,7 @@ import {IXmtNodeSetItem} from "../interfaces/ixmt-node-set-item";
 
 export class XmtNodeSetItem extends AppNodeBaseItem implements IXmtNodeSetItem
 {
-	nodeID?:number;
+public nodeID?:number;
 
 	constructor (id:number, sName:string, sDesc:string)
 	{

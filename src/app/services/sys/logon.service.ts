@@ -4,14 +4,14 @@ import {catchError,of,tap,map,switchMap,Observable,OperatorFunction, retry} from
 
 import {SessionService} from './session.service';
 import {TransportService} from './transport.service';
-import {ApiServices} from '../include/base/classes/primal/constants';
-import {ActionResultHttp} from '../include/base/classes/rcv/action-result-http';
+import {ApiServices} from '../../include/base/classes/primal/constants';
+import {ActionResultHttp} from '../../include/base/classes/rcv/action-result-http';
 
-import {IXmtLoginItem} from '../include/xmt/interfaces/xmt-login-item';
-import {IRcvUserDataResponseItem} from '../include/rcv/interfaces/rcv-user-data-response-item';
-import {IRcvMessagesLoginResponse} from '../include/rcv/interfaces/rcv-messages-login-response';
-import {IRcvMessagesSessionResponse} from '../include/rcv/interfaces/rcv-messages-session-response';
-import {IAppBaseMessagesResponse} from '../include/app/base/interfaces/iapp-base-messages-response';
+import {IXmtLoginItem} from '../../include/xmt/interfaces/xmt-login-item';
+import {IRcvUserDataResponseItem} from '../../include/rcv/interfaces/rcv-user-data-response-item';
+import {IRcvMessagesLoginResponse} from '../../include/rcv/interfaces/rcv-messages-login-response';
+import {IRcvMessagesSessionResponse} from '../../include/rcv/interfaces/rcv-messages-session-response';
+import {IAppBaseMessagesResponse} from '../../include/app/base/interfaces/iapp-base-messages-response';
 
 @Injectable
 ({

@@ -8,7 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {Constants} from 'src/app/include/base/classes/primal/constants';
 import {RegularBaseComponent} from 'src/app/include/base/classes/ui/regular-base/regular-base.component';
 
-import {LogonService} from '../../services/logon.service';
+import {LogonService} from '../../services/sys/logon.service';
 
 @Component
 ({

@@ -1,14 +1,15 @@
 import {Injectable} from '@angular/core';
 
-import {catchError,of,tap,map,switchMap,Observable,OperatorFunction, retry} from 'rxjs';
+import {catchError,of,tap,map,switchMap,Observable,OperatorFunction, retry, lastValueFrom} from 'rxjs';
 
 import {ApiServices} from 'src/app/include/base/classes/primal/constants';
 import {ActionResultHttp} from 'src/app/include/base/classes/rcv/action-result-http';
-import {IRcvMessagesResponse} from 'src/app/include/rcv/interfaces/ircv-messages-response';
-import {IRcvStatePanelResponseItem} from 'src/app/include/rcv/interfaces/rcv-state-panel-response-item';
-import {IXmtStatePanelSetItem} from 'src/app/include/xmt/interfaces/xmt-state-panel-set-item';
+import {AppActionResult} from 'src/app/include/base/classes/rcv/app-action-result';
+import {RcvMessagesResponse} from 'src/app/include/rcv/classes/rcv-messages-response';
+import {RcvStatePanelResponseItem} from 'src/app/include/rcv/classes/rcv-state-panel-response-item';
+import {IXmtStatePanelSetItem} from 'src/app/include/xmt/interfaces/ixmt-state-panel-set-item';
 
-import {TransportService} from '../transport.service';
+import {TransportService} from '../sys/transport.service';
 
 @Injectable
 ({
@@ -20,40 +21,53 @@ export class AppStatePanelService
   {
   }
 
-	public invoke_apply (obj:IXmtStatePanelSetItem): Observable<IRcvStatePanelResponseItem|IRcvMessagesResponse|null>
+	public apply (obj:IXmtStatePanelSetItem): Observable<AppActionResult<RcvStatePanelResponseItem,RcvMessagesResponse>>
 	{
 	const data:IXmtStatePanelSetItem = obj;
 
-		return this.comms.invokePost<IRcvStatePanelResponseItem,IRcvMessagesResponse>(ApiServices.StatePanel,'Apply',data).pipe
+		return this.comms.invokePost<RcvStatePanelResponseItem,RcvMessagesResponse>(ApiServices.StatePanel,'Apply',data).pipe
 		(
-			map((res:ActionResultHttp<IRcvStatePanelResponseItem|IRcvMessagesResponse>) =>
+			map((res:ActionResultHttp<RcvStatePanelResponseItem|RcvMessagesResponse>) =>
 			{
-        return res.payload;
+			const ret:AppActionResult<RcvStatePanelResponseItem,RcvMessagesResponse> =
+				new AppActionResult<RcvStatePanelResponseItem,RcvMessagesResponse>(res);
+        return ret;
 			}),
-			catchError(this.handleError<IRcvStatePanelResponseItem|null>(null))
+			catchError(this.handleError<AppActionResult<void,any>>())
 		);
 	}
 
-	public invokeApply (obj:IXmtStatePanelSetItem): Observable<IRcvStatePanelResponseItem|null>
+	public async applyAsync (obj:IXmtStatePanelSetItem): Promise<AppActionResult<RcvStatePanelResponseItem,RcvMessagesResponse>>
 	{
-		return this.invoke_apply(obj).pipe
+		return await lastValueFrom(this.apply(obj));
+	}
+
+	public delete (id:string): Observable<AppActionResult<void,RcvMessagesResponse>>
+	{
+		return this.comms.invokeDelete<void,RcvMessagesResponse>(ApiServices.Node,'Delete',id).pipe
 		(
-			map((res:IRcvStatePanelResponseItem|IRcvMessagesResponse|null) =>
+			map((res:ActionResultHttp<void|RcvMessagesResponse>) =>
 			{
-			const fail:IRcvMessagesResponse = res as IRcvMessagesResponse;
-			const ret:IRcvStatePanelResponseItem = res as IRcvStatePanelResponseItem;
-				return ret;
+			const ret:AppActionResult<void,RcvMessagesResponse> = new AppActionResult<void,RcvMessagesResponse>(res);
+        return ret;
 			}),
-			catchError(this.handleError<IRcvStatePanelResponseItem|null>(null))
+			catchError(this.handleError<AppActionResult<void,any>>())
 		);
 	}
 
-	private handleError<T> (res?:T): OperatorFunction<T,any>
+	public async deleteAsync (id:string): Promise<AppActionResult<void,RcvMessagesResponse>>
 	{
-		return (err:any): Observable<T> =>
+		return await lastValueFrom(this.delete(id));
+	}
+
+	private handleError<T> (): OperatorFunction<T,any>
+	{
+		return (err:any): Observable<AppActionResult<void,any>> =>
 		{
 			console.error(err);
-			return of(res as T);
+
+		const ret:AppActionResult<void,any> = new AppActionResult<void,any>(null,err);
+			return of(ret);
 		};
 	}
 }

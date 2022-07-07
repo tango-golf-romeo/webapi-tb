@@ -4,7 +4,7 @@ import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {MatDialog,MatDialogConfig,MatDialogRef} from "@angular/material/dialog";
 
 import {FeatureComponent} from "src/app/include/base/classes/ui/feature/feature.component";
-import {LogonService} from "src/app/services/logon.service";
+import {LogonService} from "src/app/services/sys/logon.service";
 import {DialogComponent} from "../dialog/dialog.component";
 
 export class HostedComponent extends FeatureComponent

@@ -7,7 +7,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog,MatDialogConfig} from '@angular/material/dialog';
 
 import {HostedComponent} from '../hosted/hosted.component';
-import {LogonService} from 'src/app/services/logon.service';
+import {LogonService} from 'src/app/services/sys/logon.service';
 
 @Component
 ({

@@ -7,8 +7,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog,MatDialogConfig} from '@angular/material/dialog';
 
 import {HostedComponent} from '../hosted/hosted.component';
-import {LogonService} from 'src/app/services/logon.service';
-import {TestService} from 'src/app/services/test.service';
+import {LogonService} from 'src/app/services/sys/logon.service';
+import {TestService} from 'src/app/services/sys/test.service';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {publishBehavior} from 'rxjs';
 

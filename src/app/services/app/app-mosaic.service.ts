@@ -8,7 +8,7 @@ import {IRcvMessagesResponse} from 'src/app/include/rcv/interfaces/ircv-messages
 import {IRcvStatePanelResponseItem} from 'src/app/include/rcv/interfaces/rcv-state-panel-response-item';
 import {IXmtStatePanelSetItem} from 'src/app/include/xmt/interfaces/xmt-state-panel-set-item';
 
-import {TransportService} from '../transport.service';
+import {TransportService} from '../sys/transport.service';
 
 @Injectable
 ({

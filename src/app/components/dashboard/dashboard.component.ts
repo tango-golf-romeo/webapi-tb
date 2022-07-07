@@ -8,7 +8,7 @@ import {CdkPortalOutlet,ComponentPortal,Portal,CdkPortalOutletAttachedRef} from 
 
 import {Constants} from 'src/app/include/base/classes/primal/constants';
 
-import {LogonService} from 'src/app/services/logon.service';
+import {LogonService} from 'src/app/services/sys/logon.service';
 import {FeatureBoardComponent} from '../feature-board/feature-board.component';
 import {FeatureComponent} from 'src/app/include/base/classes/ui/feature/feature.component';
 import {FaultLogComponent} from '../fault-log/fault-log.component';

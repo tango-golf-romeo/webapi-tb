@@ -14,10 +14,8 @@ export class RcvNodeResponseItem extends AppNodeBaseItem implements IRcvNodeResp
 	mosaicManagerVersion:string = '';
 	isDeleted:boolean = false;
 
-	constructor (id:number, sName:string, sDesc:string)
+	constructor (sName:string, sDesc:string)
 	{
 		super(sName,sDesc);
-
-		this.nodeID = id;
 	}
 }
