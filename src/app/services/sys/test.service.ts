@@ -64,10 +64,9 @@ export class TestService
 	const res3 = await this.statePanel.applyAsync(si3);
 
 	const ret = new Array();
-		ret.push(0);
 		if (res1?.result) ret.push(res1.success?.statePanelID);
-		if (res2?.result) ret.push(res1.success?.statePanelID);
-		if (res3?.result) ret.push(res1.success?.statePanelID);
+		if (res2?.result) ret.push(res2.success?.statePanelID);
+		if (res3?.result) ret.push(res3.success?.statePanelID);
 
 		return ret;
 	}
@@ -97,10 +96,9 @@ export class TestService
 	const res3 = await this.node.applyAsync(xmtNode3);
 
 	const ret = new Array();
-		ret.push(0);
 		if (res1?.result) ret.push(res1.success?.nodeID);
-		if (res2?.result) ret.push(res1.success?.nodeID);
-		if (res3?.result) ret.push(res1.success?.nodeID);
+		if (res2?.result) ret.push(res2.success?.nodeID);
+		if (res3?.result) ret.push(res3.success?.nodeID);
 
 		return ret;
 	}
@@ -130,10 +128,9 @@ export class TestService
 	const res3 = await this.mosaic.applyAsync(si3);
 
 	const ret = new Array();
-		ret.push(0);
 		if (res1?.result) ret.push(res1.success?.mosaicID);
-		if (res2?.result) ret.push(res1.success?.mosaicID);
-		if (res3?.result) ret.push(res1.success?.mosaicID);
+		if (res2?.result) ret.push(res2.success?.mosaicID);
+		if (res3?.result) ret.push(res3.success?.mosaicID);
 
 		return ret;
 	}
