@@ -2,7 +2,7 @@ import {IAppBaseMessagesResponse} from "../../app/base/interfaces/iapp-base-mess
 
 export interface IRcvMessagesLoginResponse extends IAppBaseMessagesResponse
 {
-	get badLoginCount (): number;
-	get availableLoginCount (): string;
-	get bannedTime (): string;
+	badLoginCount:number;
+	availableLoginCount:number;
+	bannedTime?:string;
 }

@@ -7,11 +7,16 @@ import {TransportService} from './transport.service';
 import {ApiServices} from '../../include/base/classes/primal/constants';
 import {ActionResultHttp} from '../../include/base/classes/rcv/action-result-http';
 
-import {IXmtLoginItem} from '../../include/xmt/interfaces/xmt-login-item';
-import {IRcvUserDataResponseItem} from '../../include/rcv/interfaces/rcv-user-data-response-item';
-import {IRcvMessagesLoginResponse} from '../../include/rcv/interfaces/rcv-messages-login-response';
-import {IRcvMessagesSessionResponse} from '../../include/rcv/interfaces/rcv-messages-session-response';
+import {IXmtLoginItem} from '../../include/xmt/interfaces/ixmt-login-item';
+import {IRcvUserDataResponseItem} from '../../include/rcv/interfaces/ircv-user-data-response-item';
+import {IRcvMessagesLoginResponse} from '../../include/rcv/interfaces/ircv-messages-login-response';
+import {IRcvMessagesSessionResponse} from '../../include/rcv/interfaces/ircv-messages-session-response';
 import {IAppBaseMessagesResponse} from '../../include/app/base/interfaces/iapp-base-messages-response';
+import {XmtLoginItem} from 'src/app/include/xmt/classes/xmt-login-item';
+import {RcvUserDataResponseItem} from 'src/app/include/rcv/classes/rcv-user-data-response-item';
+import {AppBaseMessagesResponse} from 'src/app/include/app/base/classes/app-base-messages-response';
+import {RcvMessagesLoginResponse} from 'src/app/include/rcv/classes/rcv-messages-login-response';
+import {RcvMessagesSessionResponse} from 'src/app/include/rcv/classes/rcv-messages-session-response';
 
 @Injectable
 ({
@@ -25,29 +30,35 @@ export class LogonService
 
 	public logon (usr:string, pwd:string): Observable<boolean>
 	{
-	const data:IXmtLoginItem = {login:usr,password:pwd,target:''};
+	const data:XmtLoginItem = new XmtLoginItem(usr,pwd);
 
-		return this.comms.invokePost<IRcvUserDataResponseItem,IAppBaseMessagesResponse>(ApiServices.Login,'CreateLogin',data).pipe
+		return this.comms.invokePost<RcvUserDataResponseItem,AppBaseMessagesResponse>(ApiServices.Login,'CreateLogin',data).pipe
 		(
-			map((res:ActionResultHttp<IRcvUserDataResponseItem|IAppBaseMessagesResponse>) =>
+			map((res:ActionResultHttp<RcvUserDataResponseItem|AppBaseMessagesResponse>) =>
 			{
 				if (res?.result)
 				{
-				const usr:IRcvUserDataResponseItem = res?.payload as IRcvUserDataResponseItem;
-					return true;
+					if (res?.payload)
+					{
+					const usr:RcvUserDataResponseItem = res?.payload as RcvUserDataResponseItem;
+					const usrid = usr.profile?.userID ?? '';
+						//do anything with usr
+					}
+					
+					return res?.result;
 				}
 				else
 				{
-				const badLogin:IRcvMessagesLoginResponse = res?.payload as IRcvMessagesLoginResponse;
-					if (badLogin) return false;
+				const badLogin:RcvMessagesLoginResponse = res?.payload as RcvMessagesLoginResponse;
+					//do something with bad login
 
-				const badSession:IRcvMessagesSessionResponse = res?.payload as IRcvMessagesSessionResponse;
-					if (badSession) return false;
+				const badSession:RcvMessagesSessionResponse = res?.payload as RcvMessagesSessionResponse;
+					//do something with bad session
 
 					return false;
 				}
 			}),
-			catchError(this.handleError<boolean>(false))
+			catchError(this.handleError<boolean>())
 		);
 	}
 
@@ -59,16 +70,16 @@ export class LogonService
 			{
 				return res?.result ?? false;
 			}),
-			catchError(this.handleError<boolean>(false))
+			catchError(this.handleError<boolean>())
 		);
 	}
 
-	private handleError<T> (res?:T): OperatorFunction<T,any>
+	private handleError<T> (): OperatorFunction<T,any>
 	{
-		return (err:any): Observable<T> =>
+		return (err:any): Observable<boolean> =>
 		{
 			console.error(err);
-			return of(res as T);
+			return of(false);
 		};
 	}
 }
