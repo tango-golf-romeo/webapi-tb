@@ -3,5 +3,5 @@ import {IRcvMessagesSessionResponse} from "../interfaces/ircv-messages-session-r
 
 export class RcvMessagesSessionResponse extends AppBaseMessagesResponse implements IRcvMessagesSessionResponse
 {
-	sessionRemainingTime?:number;
+public sessionRemainingTime?:number;
 }

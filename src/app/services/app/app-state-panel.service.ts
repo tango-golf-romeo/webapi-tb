@@ -44,7 +44,7 @@ export class AppStatePanelService
 
 	public delete (id:string): Observable<AppActionResult<void,RcvMessagesResponse>>
 	{
-		return this.comms.invokeDelete<void,RcvMessagesResponse>(ApiServices.Node,'Delete',id).pipe
+		return this.comms.invokeDelete<void,RcvMessagesResponse>(ApiServices.StatePanel,'Delete',id).pipe
 		(
 			map((res:ActionResultHttp<void|RcvMessagesResponse>) =>
 			{

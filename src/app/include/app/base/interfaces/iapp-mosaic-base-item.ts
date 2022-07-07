@@ -7,7 +7,7 @@ export interface IAppMosaicBaseItem
 	renderingRange:number;
 	width:number;
 	height:number;
-	preferredGPUSocket?:number
+	preferredGPUSocket?:number;
 	nodeID:number;
 	presetMosaicID?:number;
 	isDisabled:boolean;

@@ -8,4 +8,5 @@ export interface IRcvMosaicResponseItem extends IAppMosaicBaseItem
 	displayIDs:string[];
 	cellTemplateIDs:string[];
 	isHidden:boolean;
+	//previews not implemented so far
 }

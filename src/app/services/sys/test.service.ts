@@ -14,6 +14,8 @@ import {AppStatePanelService} from '../app/app-state-panel.service';
 import {AppNodeService} from '../app/app-node.service';
 import {XmtNodeSetItem} from '../../include/xmt/classes/xmt-node-set-item';
 import {XmtStatePanelSetItem} from 'src/app/include/xmt/classes/xmt-state-panel-set-item';
+import {XmtMosaicSetItem} from 'src/app/include/xmt/classes/xmt-mosaic-set-item';
+import {AppMosaicService} from '../app/app-mosaic.service';
 
 @Injectable
 ({
@@ -21,7 +23,10 @@ import {XmtStatePanelSetItem} from 'src/app/include/xmt/classes/xmt-state-panel-
 })
 export class TestService
 {
-  constructor (private comms:TransportService, private statePanel:AppStatePanelService, private node:AppNodeService)
+  constructor (private comms:TransportService,
+		private statePanel:AppStatePanelService,
+		private node:AppNodeService,
+		private mosaic:AppMosaicService)
   {
   }
 
@@ -114,11 +119,44 @@ export class TestService
 		await this.deleteNodes(ids);		
 	}
 
+	private async createMosaics (): Promise<string[]>
+	{
+	const si1:XmtMosaicSetItem = new XmtMosaicSetItem('tgu msc 1','tgu mosaic 1',0);
+	const si2:XmtMosaicSetItem = new XmtMosaicSetItem('tgu msc 2','tgu mosaic 2',0);
+	const si3:XmtMosaicSetItem = new XmtMosaicSetItem('tgu msc 3','tgu mosaic 3',0);
+	
+	const res1 = await this.mosaic.applyAsync(si1);
+	const res2 = await this.mosaic.applyAsync(si2);
+	const res3 = await this.mosaic.applyAsync(si3);
+
+	const ret = new Array();
+		ret.push(0);
+		if (res1?.result) ret.push(res1.success?.mosaicID);
+		if (res2?.result) ret.push(res1.success?.mosaicID);
+		if (res3?.result) ret.push(res1.success?.mosaicID);
+
+		return ret;
+	}
+
+	private async deleteMosaics (ids:string[]): Promise<void>
+	{
+		ids.forEach(async id => 
+		{
+			await this.mosaic.deleteAsync(id);
+		});
+	}
+
+	private async testMosaics (): Promise<void>
+	{
+	const ids:string[] = await this.createMosaics();
+		await this.deleteMosaics(ids);		
+	}
+
 	public async doTest (): Promise<boolean>
 	{
 		try
 		{
-			await this.testNodes();
+			await this.testMosaics();
 		}
 		catch (x)
 		{

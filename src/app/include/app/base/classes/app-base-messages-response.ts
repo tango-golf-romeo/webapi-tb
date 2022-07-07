@@ -2,12 +2,8 @@ import {IAppBaseMessagesResponse} from "../interfaces/iapp-base-messages-respons
 
 export class AppBaseMessagesResponse implements IAppBaseMessagesResponse
 {
-	error:string = '';
-	message:string = '';
+public error:string = '';
+public message:string = '';
 
-	constructor (sErr:string, sMsg:string)
-	{
-		this.error = sErr;
-		this.message = sMsg;
-	}
+	//need no constructor as it is only received always
 }
