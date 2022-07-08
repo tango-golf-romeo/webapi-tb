@@ -3,5 +3,5 @@ import {RcvUserDataProfile} from "./rcv-user-data-profile";
 
 export class RcvUserDataResponseItem implements IRcvUserDataResponseItem
 {
-public profile:RcvUserDataProfile|null = null;
+public profile: RcvUserDataProfile|null = null;
 }

@@ -1,4 +1,4 @@
 export interface IXmtStatePanelItemFinder
 {
-	statePanelID?:string;
+	statePanelID?: string;
 }

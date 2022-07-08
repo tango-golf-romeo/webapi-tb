@@ -3,5 +3,5 @@ import {IRcvStatePanelResponseItem} from "../interfaces/ircv-state-panel-respons
 
 export class RcvStatePanelResponseItem extends AppStatePanelBaseItem implements IRcvStatePanelResponseItem
 {
-public statePanelID:string = '';
+public statePanelID: string = '';
 }

@@ -1,26 +1,19 @@
 import {Injectable} from '@angular/core';
 
-import {catchError,of,map,Observable,OperatorFunction,lastValueFrom} from 'rxjs';
+import {catchError,map,Observable,lastValueFrom} from 'rxjs';
 
-import {ApiServices} from 'src/app/include/base/classes/primal/constants';
 import {ActionResultHttp} from 'src/app/include/base/classes/rcv/action-result-http';
 import {RcvMessagesResponse} from 'src/app/include/rcv/classes/rcv-messages-response';
 import {AppActionResult} from 'src/app/include/base/classes/rcv/app-action-result';
 
-import {TransportService} from '../sys/transport.service';
+import {AppBaseService} from './app-base.service';
 
 @Injectable
 ({
   providedIn: 'root'
 })
-export abstract class AppFrontBaseService<INPUT,FIND,SUCCESS,FAILURE = RcvMessagesResponse>
+export abstract class AppFrontBaseService<INPUT,FIND,SUCCESS,FAILURE = RcvMessagesResponse> extends AppBaseService
 {
-  constructor (protected comms:TransportService)
-  {
-  }
-
-  protected abstract get path (): ApiServices;
-
 	public apply (obj:INPUT): Observable<AppActionResult<SUCCESS,FAILURE>>
 	{
 	const data:INPUT = obj;
@@ -96,15 +89,4 @@ export abstract class AppFrontBaseService<INPUT,FIND,SUCCESS,FAILURE = RcvMessag
     else if (sType == 'number') return await this.invokeDeleteAsync(id.toString());
     else throw 'The supplied ID does not comply with the input type criterion.';
   }
-
-	private handleError<T> (): OperatorFunction<T,any>
-	{
-		return (err:any): Observable<AppActionResult<void,any>> =>
-		{
-			console.error(err);
-
-		const ret:AppActionResult<void,any> = new AppActionResult<void,any>(null,err);
-			return of(ret);
-		};
-	}
 }

@@ -3,7 +3,7 @@ import {IRcvMessagesLoginResponse} from "../interfaces/ircv-messages-login-respo
 
 export class RcvMessagesLoginResponse extends AppBaseMessagesResponse implements IRcvMessagesLoginResponse
 {
-public badLoginCount:number = 0;
-public availableLoginCount:number = 0;
-public bannedTime?:string;
+public badLoginCount: number = 0;
+public availableLoginCount: number = 0;
+public bannedTime?: string;
 }

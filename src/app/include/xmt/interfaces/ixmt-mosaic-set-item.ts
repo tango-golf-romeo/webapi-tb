@@ -2,6 +2,6 @@ import {IAppMosaicBaseItem} from "../../app/base/interfaces/iapp-mosaic-base-ite
 
 export interface IXmtMosaicSetItem extends IAppMosaicBaseItem
 {
-	mosaicID?:string;
-	isHidden:boolean;
+	mosaicID?: string;
+	isHidden: boolean;
 }

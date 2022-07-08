@@ -49,25 +49,4 @@ private static readonly Name:string = 'Module Tests';
 			this.showProgress = false;
 		});
 	}
-
-	onClickTest2 (event:any): void
-	{
-		this.showProgress = true;
-
-		this.test.update(2151103,22,220000).subscribe
-		({
-			next: res =>
-			{
-				if (res)
-          this.flashError('Method succesfull.');
-				else
-					this.flashError('Method failed.');
-			},
-			error: (err:any) => {console.error(err)},
-			complete: () =>
-			{
-				this.showProgress = false;
-			}
-		});
-	}
 }

@@ -1,6 +1,6 @@
 export interface IXmtNodeItemFinder
 {
-	nodeID?:number;
-	name:string;
-	nodeIDs:number[];
+	nodeID?: number;
+	name: string;
+	nodeIDs: number[];
 }

@@ -1,22 +1,14 @@
-import {Injectable, SimpleChange } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import {catchError,of,tap,map,switchMap,Observable,OperatorFunction, retry, lastValueFrom} from 'rxjs';
+import {of,Observable,OperatorFunction} from 'rxjs';
 
-import {SessionService} from './session.service';
 import {TransportService} from './transport.service';
-import {ApiServices} from '../../include/base/classes/primal/constants';
-import {ActionResultHttp} from '../../include/base/classes/rcv/action-result-http';
 
-import {IXmtProcSetItem} from '../../include/xmt/interfaces/xmt-proc-set-item';
-import {IRcvProcResponseItem} from '../../include/rcv/interfaces/rcv-proc-response-item';
-import {IRcvMessagesResponse} from '../../include/rcv/interfaces/ircv-messages-response';
 import {AppStatePanelService} from '../app/app-state-panel.service';
 import {AppNodeService} from '../app/app-node.service';
 import {XmtNodeSetItem} from '../../include/xmt/classes/xmt-node-set-item';
 import {XmtStatePanelSetItem} from 'src/app/include/xmt/classes/xmt-state-panel-set-item';
-import {XmtMosaicSetItem} from 'src/app/include/xmt/classes/xmt-mosaic-set-item';
 import {AppMosaicService} from '../app/app-mosaic.service';
-import {IXmtNodeSetItem} from 'src/app/include/xmt/interfaces/ixmt-node-set-item';
 
 @Injectable
 ({
@@ -30,29 +22,6 @@ export class TestService
 		private mosaic:AppMosaicService)
   {
   }
-
-	public update (procId:number, maxSizeLogs:number, maxRows:number): Observable<boolean>
-	{
-	const data:IXmtProcSetItem = {ProcID:procId,MaxSizeLogs:maxSizeLogs,MaxRows:maxRows};
-
-		return this.comms.invokePut<IRcvProcResponseItem,IRcvMessagesResponse>(ApiServices.Proc,'Update',data).pipe
-		(
-			map((res:ActionResultHttp<IRcvProcResponseItem|IRcvMessagesResponse>) =>
-			{
-				if (res?.result)
-				{
-				const usr:IRcvProcResponseItem = res?.payload as IRcvProcResponseItem;
-					return true;
-				}
-				else
-				{
-				const bad:IRcvMessagesResponse = res?.payload as IRcvMessagesResponse;
-					return false;
-				}
-			}),
-			catchError(this.handleError<boolean>(false))
-		);
-	}
 
 	private async createStatePanels (): Promise<string[]>
 	{

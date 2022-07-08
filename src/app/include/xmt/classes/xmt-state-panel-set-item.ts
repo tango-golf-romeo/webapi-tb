@@ -3,7 +3,7 @@ import {IXmtStatePanelSetItem} from "../interfaces/ixmt-state-panel-set-item";
 
 export class XmtStatePanelSetItem extends AppStatePanelBaseItem implements IXmtStatePanelSetItem
 {
-public statePanelID?:string;
+public statePanelID?: string;
 
 	constructor (sName:string, sDesc:string)
 	{

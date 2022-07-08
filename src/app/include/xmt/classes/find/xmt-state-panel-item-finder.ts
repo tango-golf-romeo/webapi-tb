@@ -1,4 +1,4 @@
 export class XmtStatePanelItemFinder
 {
-public statePanelID?:string;
+public statePanelID?: string;
 }

@@ -2,5 +2,5 @@ import {IAppBaseMessagesResponse} from "../../app/base/interfaces/iapp-base-mess
 
 export interface IRcvMessagesSessionResponse extends IAppBaseMessagesResponse
 {
-	sessionRemainingTime?:number;
+	sessionRemainingTime?: number;
 }
