@@ -86,6 +86,9 @@ private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpres
 
 	private getPath (svc:ApiServices, op:string|null, id:string|null = null): string
 	{
+	const s = (svc ?? '').trim();
+		if (s.length < 1) throw 'Service base relative path cannot be empty.';
+
 	const sOper:string = (op ?? '').trim();
 	const sId:string = (id ?? '').trim();
 	

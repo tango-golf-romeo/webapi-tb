@@ -7,11 +7,6 @@ import {TransportService} from './transport.service';
 import {ApiServices} from '../../include/base/classes/primal/constants';
 import {ActionResultHttp} from '../../include/base/classes/rcv/action-result-http';
 
-import {IXmtLoginItem} from '../../include/xmt/interfaces/ixmt-login-item';
-import {IRcvUserDataResponseItem} from '../../include/rcv/interfaces/ircv-user-data-response-item';
-import {IRcvMessagesLoginResponse} from '../../include/rcv/interfaces/ircv-messages-login-response';
-import {IRcvMessagesSessionResponse} from '../../include/rcv/interfaces/ircv-messages-session-response';
-import {IAppBaseMessagesResponse} from '../../include/app/base/interfaces/iapp-base-messages-response';
 import {XmtLoginItem} from 'src/app/include/xmt/classes/xmt-login-item';
 import {RcvUserDataResponseItem} from 'src/app/include/rcv/classes/rcv-user-data-response-item';
 import {AppBaseMessagesResponse} from 'src/app/include/app/base/classes/app-base-messages-response';
