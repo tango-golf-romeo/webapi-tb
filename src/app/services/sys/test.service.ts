@@ -16,6 +16,7 @@ import {XmtNodeSetItem} from '../../include/xmt/classes/xmt-node-set-item';
 import {XmtStatePanelSetItem} from 'src/app/include/xmt/classes/xmt-state-panel-set-item';
 import {XmtMosaicSetItem} from 'src/app/include/xmt/classes/xmt-mosaic-set-item';
 import {AppMosaicService} from '../app/app-mosaic.service';
+import {IXmtNodeSetItem} from 'src/app/include/xmt/interfaces/ixmt-node-set-item';
 
 @Injectable
 ({
@@ -117,43 +118,11 @@ export class TestService
 		await this.deleteNodes(ids);		
 	}
 
-	private async createMosaics (): Promise<string[]>
-	{
-	const si1:XmtMosaicSetItem = new XmtMosaicSetItem('tgu msc 1','tgu mosaic 1',0);
-	const si2:XmtMosaicSetItem = new XmtMosaicSetItem('tgu msc 2','tgu mosaic 2',0);
-	const si3:XmtMosaicSetItem = new XmtMosaicSetItem('tgu msc 3','tgu mosaic 3',0);
-	
-	const res1 = await this.mosaic.applyAsync(si1);
-	const res2 = await this.mosaic.applyAsync(si2);
-	const res3 = await this.mosaic.applyAsync(si3);
-
-	const ret = new Array();
-		if (res1?.result) ret.push(res1.success?.mosaicID);
-		if (res2?.result) ret.push(res2.success?.mosaicID);
-		if (res3?.result) ret.push(res3.success?.mosaicID);
-
-		return ret;
-	}
-
-	private async deleteMosaics (ids:string[]): Promise<void>
-	{
-		ids.forEach(async id => 
-		{
-			await this.mosaic.deleteAsync(id);
-		});
-	}
-
-	private async testMosaics (): Promise<void>
-	{
-	const ids:string[] = await this.createMosaics();
-		await this.deleteMosaics(ids);		
-	}
-
 	public async doTest (): Promise<boolean>
 	{
 		try
 		{
-			await this.testMosaics();
+			await this.testStatePanels();
 		}
 		catch (x)
 		{

@@ -29,7 +29,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
-import {AuthInterceptor,HttpXsrfCookieExtractor/*,XSRF_COOKIE_NAME,XSRF_HEADER_NAME*/} from './interceptors/auth.interceptor';
+import {AuthInterceptor,HttpXsrfCookieExtractor} from './interceptors/auth.interceptor';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -94,9 +94,7 @@ import {ModuleTestsComponent} from './components/module-tests/module-tests.compo
   providers:
 	[
 		{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-		{provide: HttpXsrfTokenExtractor, useClass: HttpXsrfCookieExtractor}//,
-		//{provide: XSRF_COOKIE_NAME},
-		//{provide: XSRF_HEADER_NAME}
+		{provide: HttpXsrfTokenExtractor, useClass: HttpXsrfCookieExtractor}
 	],
   bootstrap: [AppComponent]
 })

@@ -2,15 +2,13 @@ import {Component,OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatDialog,MatDialogConfig} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 
 import {HostedComponent} from '../hosted/hosted.component';
+
 import {LogonService} from 'src/app/services/sys/logon.service';
 import {TestService} from 'src/app/services/sys/test.service';
-import {bootstrapApplication} from '@angular/platform-browser';
-import {publishBehavior} from 'rxjs';
+import {TestMosaicService} from 'src/app/services/test/test-mosaic.service';
 
 @Component
 ({
@@ -22,7 +20,8 @@ export class ModuleTestsComponent extends HostedComponent implements OnInit
 {
 private static readonly Name:string = 'Module Tests';
 
-  constructor (rt:Router, svcLogon:LogonService, ctrlBottomSheet:MatBottomSheet, dlg: MatDialog, private test:TestService)
+  constructor (rt:Router, svcLogon:LogonService, ctrlBottomSheet:MatBottomSheet, dlg: MatDialog,
+		private test:TestService, private testMosaic:TestMosaicService)
   {
     super(rt,svcLogon,ctrlBottomSheet,dlg);
   }
@@ -36,7 +35,7 @@ private static readonly Name:string = 'Module Tests';
 	{
 		this.showProgress = true;
 
- 		const test:Promise<boolean> = this.test.doTest();
+ 		const test:Promise<boolean> = this.testMosaic.findMosaicsAsync();
 		test.then(success =>
 		{
 			console.log(success);
@@ -49,22 +48,6 @@ private static readonly Name:string = 'Module Tests';
 		{
 			this.showProgress = false;
 		});
-
-		/*this.test.testMosaicStatePanel().subscribe
-		({
-			next: res =>
-			{
-				if (res)
-          this.flashError('Test succesfull.');
-				else
-					this.flashError('Test failed.');
-			},
-			error: (err:any) => {console.error(err)},
-			complete: () =>
-			{
-				this.showProgress = false;
-			}
-		});*/
 	}
 
 	onClickTest2 (event:any): void

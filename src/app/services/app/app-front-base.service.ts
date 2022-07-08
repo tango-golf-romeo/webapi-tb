@@ -13,7 +13,7 @@ import {TransportService} from '../sys/transport.service';
 ({
   providedIn: 'root'
 })
-export abstract class AppFrontBaseService<INPUT,SUCCESS,FAILURE = RcvMessagesResponse>
+export abstract class AppFrontBaseService<INPUT,FIND,SUCCESS,FAILURE = RcvMessagesResponse>
 {
   constructor (protected comms:TransportService)
   {
@@ -39,6 +39,26 @@ export abstract class AppFrontBaseService<INPUT,SUCCESS,FAILURE = RcvMessagesRes
 	public async applyAsync (obj:INPUT): Promise<AppActionResult<SUCCESS,FAILURE>>
 	{
 		return await lastValueFrom(this.apply(obj));
+	}
+
+	public find (obj:FIND): Observable<AppActionResult<SUCCESS[],FAILURE>>
+	{
+	const data:FIND = obj;
+
+		return this.comms.invokePost<SUCCESS[],FAILURE>(this.path,'Find',data).pipe
+		(
+			map((res:ActionResultHttp<SUCCESS[]|FAILURE>) =>
+			{
+			const ret:AppActionResult<SUCCESS[],FAILURE> = new AppActionResult<SUCCESS[],FAILURE>(res);
+        return ret;
+			}),
+			catchError(this.handleError<AppActionResult<void,any>>())
+		);
+	}
+
+	public async findAsync (obj:FIND): Promise<AppActionResult<SUCCESS[],FAILURE>>
+	{
+		return await lastValueFrom(this.find(obj));
 	}
 
 	private invokeDelete (id:string): Observable<AppActionResult<void,FAILURE>>
