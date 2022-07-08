@@ -1,5 +1,6 @@
 export enum ApiServices
 {
+	Dummy = 'Test/Dummy',
 	Login = 'Admin/Login',
 	Logout = 'Logout',
 	Mosaic = 'Frontend/Mosaic',

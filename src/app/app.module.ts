@@ -63,11 +63,13 @@ import {ModuleTestsComponent} from './components/module-tests/module-tests.compo
 		FormsModule,
 		ReactiveFormsModule,
 		HttpClientModule,
-		HttpClientXsrfModule.withOptions(
+		//we don't need it as we have our own auth interceptor
+		//bet let it live commented, please
+		/*HttpClientXsrfModule.withOptions(
 		{
 			cookieName: 'access_token',
 			headerName: 'X-XSRF-TOKEN'
-		}),
+		}),*/
     BrowserAnimationsModule,
 		PortalModule,
 		ScrollingModule,
@@ -93,8 +95,11 @@ import {ModuleTestsComponent} from './components/module-tests/module-tests.compo
   ],
   providers:
 	[
-		{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-		{provide: HttpXsrfTokenExtractor, useClass: HttpXsrfCookieExtractor}
+		{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+
+		//we don't need it as we have our own auth interceptor
+		//bet let it live commented, please
+		//,{provide: HttpXsrfTokenExtractor, useClass: HttpXsrfCookieExtractor}
 	],
   bootstrap: [AppComponent]
 })

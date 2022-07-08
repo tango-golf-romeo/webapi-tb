@@ -4,7 +4,6 @@ import {HttpClient,HttpHeaders,HttpErrorResponse,HttpResponse,HttpParams} from '
 import {Observable,OperatorFunction,of,catchError,tap,map,ObservableInput,retry, throwError} from 'rxjs';
 
 import {ApiServices,Constants} from '../../include/base/classes/primal/constants';
-import {SessionService} from './session.service';
 import {ActionResultHttp} from '../../include/base/classes/rcv/action-result-http';
 
 @Injectable
@@ -16,7 +15,7 @@ export class TransportService
 private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpress:Constants.HttpRootDevKestrel) +
 	`${Constants.RelativePathWebApi}/`;
   
-  constructor (private http:HttpClient, private session:SessionService)
+  constructor (private http:HttpClient)
   {
   }
 
