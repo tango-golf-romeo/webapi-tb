@@ -4,5 +4,5 @@ export class XmtGroupItemFinder implements IXmtGroupItemFinder
 {
 public groupID?: number;
 public userID?: string;
-public isASccessible?: boolean;
+public isAccessible?: boolean;
 }

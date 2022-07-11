@@ -23,6 +23,16 @@ export class TestLocationService
     return res.success?.locationID ?? -1;
 	}
 
+	public async createChildLocationWithGroupAsync (grpId:number): Promise<number>
+	{
+	const si:XmtLocationSetItem = new XmtLocationSetItem('tgu 1','tgu test lcoation 1');
+    si.parentID = 1;
+    si.groupIDs = [grpId];
+	
+	const res = await this.location.applyAsync(si);
+    return res.success?.locationID ?? -1;
+	}
+
 	public async bindGroupAsync (locId:number, grpId:number): Promise<number>
 	{
 	const si:XmtLocationSetItem = new XmtLocationSetItem('tgu 1','tgu test lcoation 1');

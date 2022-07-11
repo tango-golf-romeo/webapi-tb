@@ -1,4 +1,6 @@
 import {Injectable} from '@angular/core';
+import {RcvGroupResponseItem} from 'src/app/include/rcv/classes/rec-group-response-item';
+import {XmtGroupItemFinder} from 'src/app/include/xmt/classes/find/xmt-group-item-finder';
 
 import {XmtGroupSetItem} from 'src/app/include/xmt/classes/xmt-group-set-item';
 
@@ -42,5 +44,21 @@ export class TestGroupService
   const grpId:number = await this.recreateGroupAsync();
   const res:boolean = await this.deleteGroupAsync(grpId);
     return res;
+  }
+
+  public async getAllGroupsAsync (): Promise<RcvGroupResponseItem[]>
+  {
+  const fnd:XmtGroupItemFinder = new XmtGroupItemFinder();
+  const res = await this.group.findAsync(fnd);
+    return res?.success ?? [];
+  }
+
+  public async getAllAccesssibleGroupsAsync (): Promise<RcvGroupResponseItem[]>
+  {
+  const fnd:XmtGroupItemFinder = new XmtGroupItemFinder();
+    fnd.isAccessible = true;
+
+  const res = await this.group.findAsync(fnd);
+    return res?.success ?? [];
   }
 }
