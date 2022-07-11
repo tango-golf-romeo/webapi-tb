@@ -1,6 +1,4 @@
-import {IAppStatePanelBaseItem} from "../interfaces/iapp-state-panel-base-item";
-
-export class AppStatePanelBaseItem implements IAppStatePanelBaseItem
+export class AppGroupBaseItem
 {
 public name: string = '';
 public description: string = '';

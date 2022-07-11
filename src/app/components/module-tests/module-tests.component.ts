@@ -9,6 +9,8 @@ import {HostedComponent} from '../hosted/hosted.component';
 import {LogonService} from 'src/app/services/sys/logon.service';
 import {TestService} from 'src/app/services/sys/test.service';
 import {TestMosaicService} from 'src/app/services/test/test-mosaic.service';
+import {TestGroupService} from 'src/app/services/test/test-group.service';
+import {CrossTestService} from 'src/app/services/test/cross-test.service';
 
 @Component
 ({
@@ -21,7 +23,7 @@ export class ModuleTestsComponent extends HostedComponent implements OnInit
 private static readonly Name:string = 'Module Tests';
 
   constructor (rt:Router, svcLogon:LogonService, ctrlBottomSheet:MatBottomSheet, dlg: MatDialog,
-		private test:TestService, private testMosaic:TestMosaicService)
+		private test:TestService, private crossTest:CrossTestService,private testMosaic:TestMosaicService, private testGroup:TestGroupService)
   {
     super(rt,svcLogon,ctrlBottomSheet,dlg);
   }
@@ -35,7 +37,7 @@ private static readonly Name:string = 'Module Tests';
 	{
 		this.showProgress = true;
 
- 		const test:Promise<boolean> = this.testMosaic.findMosaicsAsync();
+	const test:Promise<boolean> = this.crossTest.testAsync();
 		test.then(success =>
 		{
 			console.log(success);

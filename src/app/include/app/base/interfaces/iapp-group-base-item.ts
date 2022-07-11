@@ -1,4 +1,4 @@
-export interface IAppStatePanelBaseItem
+export interface IAppGroupBaseItem
 {
 	name: string;
 	description: string;

@@ -1,5 +1,5 @@
 export interface IAppBaseMessagesResponse
 {
-	error:string;
-	message:string;
+	error: string;
+	message: string;
 }
