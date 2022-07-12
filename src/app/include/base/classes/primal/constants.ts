@@ -5,6 +5,7 @@ export enum ApiServices
 	Location = 'Geography/Location',
 	Login = 'Admin/Login',
 	Logout = 'Logout',
+	MonitoringObject = 'Probe/MonitoringObject',
 	Mosaic = 'Frontend/Mosaic',
 	Node = 'Probe/Node',
 	Proc = 'Cleanup/Proc',

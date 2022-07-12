@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
 
 import {RcvLocationResponseItem} from 'src/app/include/rcv/classes/rcv-location-response-item';
+import {RcvMonitoringObjectResponseItem} from 'src/app/include/rcv/classes/rcv-monitoring-object-response-item';
 import {RcvGroupResponseItem} from 'src/app/include/rcv/classes/rec-group-response-item';
 
 import {TestGroupService} from './test-group.service';
 import {TestLocationService} from './test-location.service';
+import {TestMonitoringObjectService} from './test-monitoring-object.service';
 
 @Injectable
 ({
@@ -12,7 +14,7 @@ import {TestLocationService} from './test-location.service';
 })
 export class CrossTestService
 {
-  constructor (private group:TestGroupService, private location:TestLocationService)
+  constructor (private group:TestGroupService, private location:TestLocationService, private mo:TestMonitoringObjectService)
   {
   }
 
@@ -44,6 +46,13 @@ export class CrossTestService
 
     res = await this.group.deleteGroupAsync(grpId);
 
+    return true;
+  }
+
+  public async testSlms7596Async (): Promise<boolean>
+  {
+  const objs:RcvMonitoringObjectResponseItem[] = await this.mo.getAllObjectsAsync();
+  const obj:RcvMonitoringObjectResponseItem|undefined = objs.find(e => (e.nodeID ?? -1) == 0);
     return true;
   }
 }
