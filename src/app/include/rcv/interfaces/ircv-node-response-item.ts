@@ -12,4 +12,5 @@ export interface IRcvNodeResponseItem extends IAppNodeBaseItem
 	multiProbeGuardVersion: string;
 	mosaicManagerVersion: string;
 	isDeleted: boolean;
+	isReadOnly: boolean;
 }

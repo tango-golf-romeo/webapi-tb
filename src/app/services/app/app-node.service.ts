@@ -11,6 +11,7 @@ import {RcvNodeResponseItem} from 'src/app/include/rcv/classes/rcv-node-response
 import {IXmtNodeItemFinder} from 'src/app/include/xmt/interfaces/find/ixmt-node-item-finder';
 
 import {AppFrontBaseService} from './app-front-base.service';
+import {RcvNodeSettingsResponseItem} from 'src/app/include/rcv/classes/rcv-node-settings-response-item';
 
 @Injectable
 ({
@@ -40,5 +41,25 @@ export class AppNodeService extends AppFrontBaseService<IXmtNodeSetItem,IXmtNode
 	public async clearCacheAsync (): Promise<AppActionResult<void,RcvMessagesResponse>>
 	{
 		return await lastValueFrom(this.clearCache());
+	}
+
+	public getSettings (id:number): Observable<AppActionResult<RcvNodeSettingsResponseItem,RcvMessagesResponse>>
+	{
+		return this.comms.invokeGet<RcvNodeSettingsResponseItem,RcvMessagesResponse>(this.path,'GetSettings',id).pipe
+		(
+			map((res:ActionResultHttp<RcvNodeSettingsResponseItem|RcvMessagesResponse>) =>
+			{
+			const ret:AppActionResult<RcvNodeSettingsResponseItem,RcvMessagesResponse> =
+				new AppActionResult<RcvNodeSettingsResponseItem,RcvMessagesResponse>(res);
+        
+				return ret;
+			}),
+			catchError(this.handleError<AppActionResult<void,any>>())
+		);
+	}
+
+	public async getSettingsAsync (id:number): Promise<AppActionResult<RcvNodeSettingsResponseItem,RcvMessagesResponse>>
+	{
+		return await lastValueFrom(this.getSettings(id));
 	}
 }

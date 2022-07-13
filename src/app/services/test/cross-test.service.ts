@@ -2,11 +2,14 @@ import {Injectable} from '@angular/core';
 
 import {RcvLocationResponseItem} from 'src/app/include/rcv/classes/rcv-location-response-item';
 import {RcvMonitoringObjectResponseItem} from 'src/app/include/rcv/classes/rcv-monitoring-object-response-item';
+import {RcvNodeResponseItem} from 'src/app/include/rcv/classes/rcv-node-response-item';
+import {RcvNodeSettingsResponseItem} from 'src/app/include/rcv/classes/rcv-node-settings-response-item';
 import {RcvGroupResponseItem} from 'src/app/include/rcv/classes/rec-group-response-item';
 
 import {TestGroupService} from './test-group.service';
 import {TestLocationService} from './test-location.service';
 import {TestMonitoringObjectService} from './test-monitoring-object.service';
+import {TestNodeService} from './test-node.service';
 
 @Injectable
 ({
@@ -14,7 +17,10 @@ import {TestMonitoringObjectService} from './test-monitoring-object.service';
 })
 export class CrossTestService
 {
-  constructor (private group:TestGroupService, private location:TestLocationService, private mo:TestMonitoringObjectService)
+  constructor (private group:TestGroupService,
+    private location:TestLocationService,
+    private mo:TestMonitoringObjectService,
+    private node:TestNodeService)
   {
   }
 
@@ -51,8 +57,26 @@ export class CrossTestService
 
   public async testSlms7596Async (): Promise<boolean>
   {
-  const objs:RcvMonitoringObjectResponseItem[] = await this.mo.getAllObjectsAsync();
-  const obj:RcvMonitoringObjectResponseItem|undefined = objs.find(e => (e.nodeID ?? -1) == 0);
+  const all:RcvMonitoringObjectResponseItem[] = await this.mo.getAllObjectsAsync();
+  const byZeroNode:RcvMonitoringObjectResponseItem[] = all.filter(e => (e.nodeID ?? -1) == 0);
+    return true;
+  }
+
+  public async testSlms7587Async (): Promise<boolean>
+  {
+  const bUpdateZero:boolean = await this.node.updateZeroNodeAsync();
+  
+  const allNodes:RcvNodeResponseItem[] = await this.node.getAllNodesAsync();
+  const ids:number[] = allNodes.map(e => e.nodeID);
+
+  const roNodes:RcvNodeResponseItem[] = allNodes.filter(e => e.isReadOnly);
+
+  const res = await this.node.getSettingsAsync(0);
+  const res2 = await this.node.getSettingsAsync(999);
+
+  const allNodeSettings:RcvNodeSettingsResponseItem[] = await this.node.getSettingsOfAllNodesAsync(ids);
+  const roNodeSettings:RcvNodeSettingsResponseItem[] = allNodeSettings.filter(e => e.isReadOnly);
+
     return true;
   }
 }

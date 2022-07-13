@@ -39,13 +39,19 @@ private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpres
 	public invokeGet<SUCCESS,FAILURE> (svc:ApiServices, op:string|null, input:any = {}): Observable<ActionResultHttp<SUCCESS|FAILURE>>
 	{
 	let sPath:string = this.getPath(svc,op);
+	const sType = typeof input;
 
-		if (typeof input == 'string')
+		if (sType == 'string')
 		{
 		const qs = new HttpParams({fromString:input}).toString();
 			sPath += ('?' + qs);
 		}
-		else if (typeof input == 'object')
+		else if (sType == 'number')
+		{
+			//qs = new HttpParams({fromString:input.toString()}).toString();
+			sPath += '/' + input.toString();
+		}
+		else if (sType == 'object')
 		{
 		const qs = new HttpParams({fromObject:input}).toString();
 			sPath += ('?' + qs);

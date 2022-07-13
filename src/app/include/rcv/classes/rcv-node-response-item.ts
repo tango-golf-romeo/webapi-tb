@@ -13,4 +13,5 @@ public multiScreenServerVersion: string = '';
 public multiProbeGuardVersion: string = '';
 public mosaicManagerVersion: string = '';
 public isDeleted: boolean = false;
+public isReadOnly: boolean = false;
 }
