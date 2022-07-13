@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {MatDialog} from '@angular/material/dialog';
 
-import {Constants} from 'src/app/include/base/classes/primal/constants';
+import {ApiServices, Constants} from 'src/app/include/base/classes/primal/constants';
 import {RegularBaseComponent} from 'src/app/include/base/classes/ui/regular-base/regular-base.component';
 
 import {LogonService} from '../../services/sys/logon.service';
@@ -46,8 +46,8 @@ password:string = '';
 
 	onClickSneak (event:any): void
 	{
-		this.username = 'SystemAdmin';
-		this.password = 'StreamLabs';
+		this.username = Constants.Username;
+		this.password = Constants.Password;
 
 		this.doLogon();
 	}
