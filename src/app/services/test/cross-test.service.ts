@@ -4,12 +4,14 @@ import {RcvLocationResponseItem} from 'src/app/include/rcv/classes/rcv-location-
 import {RcvMonitoringObjectResponseItem} from 'src/app/include/rcv/classes/rcv-monitoring-object-response-item';
 import {RcvNodeResponseItem} from 'src/app/include/rcv/classes/rcv-node-response-item';
 import {RcvNodeSettingsResponseItem} from 'src/app/include/rcv/classes/rcv-node-settings-response-item';
+import {RcvUserResponseItem} from 'src/app/include/rcv/classes/rcv-user-response-item';
 import {RcvGroupResponseItem} from 'src/app/include/rcv/classes/rec-group-response-item';
 
 import {TestGroupService} from './test-group.service';
 import {TestLocationService} from './test-location.service';
 import {TestMonitoringObjectService} from './test-monitoring-object.service';
 import {TestNodeService} from './test-node.service';
+import {TestUserService} from './test-user.service';
 
 @Injectable
 ({
@@ -20,7 +22,8 @@ export class CrossTestService
   constructor (private group:TestGroupService,
     private location:TestLocationService,
     private mo:TestMonitoringObjectService,
-    private node:TestNodeService)
+    private node:TestNodeService,
+    private user:TestUserService)
   {
   }
 
@@ -77,6 +80,12 @@ export class CrossTestService
   const allNodeSettings:RcvNodeSettingsResponseItem[] = await this.node.getSettingsOfAllNodesAsync(ids);
   const roNodeSettings:RcvNodeSettingsResponseItem[] = allNodeSettings.filter(e => e.isReadOnly);
 
+    return true;
+  }
+
+  public async testSlms7632Async (): Promise<boolean>
+  {
+  const usr:RcvUserResponseItem|null = await this.user.createNewUserAsync('usrtgu1','tgu user 1','mylongpassword');
     return true;
   }
 }

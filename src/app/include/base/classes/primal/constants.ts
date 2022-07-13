@@ -9,7 +9,8 @@ export enum ApiServices
 	Mosaic = 'Frontend/Mosaic',
 	Node = 'Probe/Node',
 	Proc = 'Cleanup/Proc',
-	StatePanel = 'Frontend/StatePanel'
+	StatePanel = 'Frontend/StatePanel',
+	User = 'Admin/User'
 }
 
 export class Constants
@@ -24,9 +25,9 @@ export class Constants
 
 	public static readonly RelativePathWebApi:string = 'api';
 
-	//public static readonly Username = 'SystemAdmin';
-	//public static readonly Password = 'StreamLabs';
+	public static readonly Username = 'SystemAdmin';
+	public static readonly Password = 'StreamLabs';
 
-	public static readonly Username = 'A.petrov';
-	public static readonly Password = '9ZDxxYw2';
+	//public static readonly Username = 'A.petrov';
+	//public static readonly Password = '9ZDxxYw2';
 }
