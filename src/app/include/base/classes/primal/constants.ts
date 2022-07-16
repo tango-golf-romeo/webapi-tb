@@ -27,7 +27,4 @@ export class Constants
 
 	public static readonly Username = 'SystemAdmin';
 	public static readonly Password = 'StreamLabs';
-
-	//public static readonly Username = 'A.petrov';
-	//public static readonly Password = '9ZDxxYw2';
 }
