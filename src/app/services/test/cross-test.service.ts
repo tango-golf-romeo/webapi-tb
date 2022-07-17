@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 
 import {RcvLocationResponseItem} from 'src/app/include/rcv/classes/rcv-location-response-item';
+import {RcvLocationTypeResponseItem} from 'src/app/include/rcv/classes/rcv-location-type-response-item';
 import {RcvMonitoringObjectResponseItem} from 'src/app/include/rcv/classes/rcv-monitoring-object-response-item';
 import {RcvNodeResponseItem} from 'src/app/include/rcv/classes/rcv-node-response-item';
 import {RcvNodeSettingsResponseItem} from 'src/app/include/rcv/classes/rcv-node-settings-response-item';
@@ -8,6 +9,7 @@ import {RcvUserResponseItem} from 'src/app/include/rcv/classes/rcv-user-response
 import {RcvGroupResponseItem} from 'src/app/include/rcv/classes/rec-group-response-item';
 
 import {TestGroupService} from './test-group.service';
+import {TestLocationTypeService} from './test-location-type.service';
 import {TestLocationService} from './test-location.service';
 import {TestMonitoringObjectService} from './test-monitoring-object.service';
 import {TestNodeService} from './test-node.service';
@@ -20,6 +22,7 @@ import {TestUserService} from './test-user.service';
 export class CrossTestService
 {
   constructor (private group:TestGroupService,
+    private locationType:TestLocationTypeService,
     private location:TestLocationService,
     private mo:TestMonitoringObjectService,
     private node:TestNodeService,
@@ -30,7 +33,7 @@ export class CrossTestService
   public async testSlms7578Async (): Promise<boolean>
   {
   const grpId:number = await this.group.createGroupAsync();
-  const locId:number = await this.location.createLocationAsync();
+  const locId:number = await this.location.createLocationAsync('tgu 1','tgu test location 1');
   const locId2:number = await this.location.bindGroupAsync(locId,grpId);
   const locs1:RcvLocationResponseItem[] = await this.location.getAllLocationsAsync();
   const res:boolean = await this.group.deleteGroupAsync(grpId);
@@ -46,7 +49,7 @@ export class CrossTestService
   const grps2:RcvGroupResponseItem[] = await this.group.getAllAccesssibleGroupsAsync();
 
   const locs1:RcvLocationResponseItem[] = await this.location.getAllLocationsAsync();
-  const locId:number = await this.location.createChildLocationWithGroupAsync(grpId);
+  const locId:number = await this.location.createChildLocationWithGroupAsync('tgu 1','tgu test location 1',grpId);
   
   const locs2:RcvLocationResponseItem[] = await this.location.getAllLocationsAsync();
   let res:boolean = await this.location.deleteLocationAsync(locId);
@@ -86,6 +89,24 @@ export class CrossTestService
   public async testSlms7632Async (): Promise<boolean>
   {
   const usr:RcvUserResponseItem|null = await this.user.createNewUserAsync('usrtgu1','tgu user 1','mylongpassword');
+    return true;
+  }
+
+  public async TestSlms7680Async (): Promise<boolean>
+  {
+  const locType:RcvLocationTypeResponseItem|null = await this.locationType.createLocationTypeAsync2('tgu loctype 1',
+    'tgu test loca type 1.');
+  const locTypeId:number = locType?.locationTypeID ?? -1;
+
+  const loc:RcvLocationResponseItem|null = await this.location.createLocationAsync3('tgu loc 1','tgu test loc 1.',locTypeId);
+  const locId:number = loc?.locationID ?? -1;
+
+  const locTypes:RcvLocationTypeResponseItem[] = await this.locationType.getAllLocationTypesAsync();
+  const locs:RcvLocationResponseItem[] = await this.location.getAllLocationsAsync();
+
+  const bDeleteLoc = await this.location.deleteLocationAsync(locId);
+  const bDeleteLocType = await this.locationType.deleteLocationTypeAsync(locTypeId);
+
     return true;
   }
 }

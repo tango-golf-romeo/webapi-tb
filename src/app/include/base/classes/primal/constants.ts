@@ -3,6 +3,7 @@ export enum ApiServices
 	Dummy = 'Test/Dummy',
 	Group = 'Admin/Group',
 	Location = 'Geography/Location',
+	LocationType = 'Geography/LocationType',
 	Login = 'Admin/Login',
 	Logout = 'Logout',
 	MonitoringObject = 'Probe/MonitoringObject',
