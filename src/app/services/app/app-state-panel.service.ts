@@ -11,7 +11,7 @@ import {AppFrontBaseService} from './app-front-base.service';
 ({
   providedIn: 'root'
 })
-export class AppStatePanelService extends AppFrontBaseService<IXmtStatePanelSetItem,IXmtStatePanelItemFinder,RcvStatePanelResponseItem>
+export class AppStatePanelService extends AppFrontBaseService<IXmtStatePanelSetItem,IXmtStatePanelItemFinder,RcvStatePanelResponseItem,void>
 {
 	protected get path (): ApiServices
 	{

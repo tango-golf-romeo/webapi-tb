@@ -11,7 +11,7 @@ import {AppFrontBaseService} from './app-front-base.service';
 ({
   providedIn: 'root'
 })
-export class AppWorkspaceService extends AppFrontBaseService<IXmtWorkspaceSetItem,IXmtWorkspaceItemFinder,RcvWorkspaceResponseItem>
+export class AppWorkspaceService extends AppFrontBaseService<IXmtWorkspaceSetItem,IXmtWorkspaceItemFinder,RcvWorkspaceResponseItem,void>
 {
 	protected get path (): ApiServices
 	{

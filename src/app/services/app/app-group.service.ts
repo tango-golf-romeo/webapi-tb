@@ -11,7 +11,7 @@ import {AppFrontBaseService} from './app-front-base.service';
 ({
   providedIn: 'root'
 })
-export class AppGroupService extends AppFrontBaseService<IXmtGroupSetItem,IXmtGroupItemFinder,RcvGroupResponseItem>
+export class AppGroupService extends AppFrontBaseService<IXmtGroupSetItem,IXmtGroupItemFinder,RcvGroupResponseItem,void>
 {
 	protected get path (): ApiServices
 	{

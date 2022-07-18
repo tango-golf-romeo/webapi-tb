@@ -10,7 +10,7 @@ import {AppFrontBaseService} from './app-front-base.service';
 ({
   providedIn: 'root'
 })
-export class AppMonitoringObjectService extends AppFrontBaseService<void,IXmtMonitoringObjectItemFinder,RcvMonitoringObjectResponseItem>
+export class AppMonitoringObjectService extends AppFrontBaseService<void,IXmtMonitoringObjectItemFinder,RcvMonitoringObjectResponseItem,void>
 {
 	protected get path (): ApiServices
 	{

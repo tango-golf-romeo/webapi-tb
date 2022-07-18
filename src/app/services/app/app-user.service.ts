@@ -11,7 +11,7 @@ import {AppFrontBaseService} from './app-front-base.service';
 ({
   providedIn: 'root'
 })
-export class AppUserService extends AppFrontBaseService<IXmtUserSetItem,IXmtUserItemFinder,RcvUserResponseItem>
+export class AppUserService extends AppFrontBaseService<IXmtUserSetItem,IXmtUserItemFinder,RcvUserResponseItem,void>
 {
 	protected get path (): ApiServices
 	{

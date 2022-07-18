@@ -17,7 +17,7 @@ import {RcvNodeSettingsResponseItem} from 'src/app/include/rcv/classes/rcv-node-
 ({
   providedIn: 'root'
 })
-export class AppNodeService extends AppFrontBaseService<IXmtNodeSetItem,IXmtNodeItemFinder,RcvNodeResponseItem>
+export class AppNodeService extends AppFrontBaseService<IXmtNodeSetItem,IXmtNodeItemFinder,RcvNodeResponseItem,void>
 {
 	protected get path (): ApiServices
 	{

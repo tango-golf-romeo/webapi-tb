@@ -11,7 +11,7 @@ import {AppFrontBaseService} from './app-front-base.service';
 ({
   providedIn: 'root'
 })
-export class AppLocationTypeService extends AppFrontBaseService<IXmtLocationTypeSetItem,IXmtLocationTypeItemFinder,RcvLocationTypeResponseItem>
+export class AppLocationTypeService extends AppFrontBaseService<IXmtLocationTypeSetItem,IXmtLocationTypeItemFinder,RcvLocationTypeResponseItem,void>
 {
 	protected get path (): ApiServices
 	{

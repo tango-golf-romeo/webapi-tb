@@ -11,7 +11,7 @@ import {AppFrontBaseService} from './app-front-base.service';
 ({
   providedIn: 'root'
 })
-export class AppMosaicService extends AppFrontBaseService<IXmtMosaicSetItem,IXmtMosaicItemFinder,RcvMosaicResponseItem>
+export class AppMosaicService extends AppFrontBaseService<IXmtMosaicSetItem,IXmtMosaicItemFinder,RcvMosaicResponseItem,void>
 {
 	protected get path (): ApiServices
 	{

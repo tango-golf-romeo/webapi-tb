@@ -12,7 +12,7 @@ import {AppBaseService} from './app-base.service';
 ({
   providedIn: 'root'
 })
-export abstract class AppFrontBaseService<INPUT,FIND,SUCCESS,FAILURE = RcvMessagesResponse> extends AppBaseService
+export abstract class AppFrontBaseService<INPUT,FIND,SUCCESS,CONTENT,FAILURE = RcvMessagesResponse> extends AppBaseService
 {
 	public apply (obj:INPUT): Observable<AppActionResult<SUCCESS,FAILURE>>
 	{
@@ -89,4 +89,22 @@ export abstract class AppFrontBaseService<INPUT,FIND,SUCCESS,FAILURE = RcvMessag
     else if (sType == 'number') return await this.invokeDeleteAsync(id.toString());
     else throw 'The supplied ID does not comply with the input type criterion.';
   }
+
+	public getContent (id:string): Observable<AppActionResult<CONTENT,FAILURE>>
+	{
+		return this.comms.invokeGet<CONTENT,FAILURE>(this.path,'GetContent',id).pipe
+		(
+			map((res:ActionResultHttp<CONTENT|FAILURE>) =>
+			{
+			const ret:AppActionResult<CONTENT,FAILURE> = new AppActionResult<CONTENT,FAILURE>(res);
+        return ret;
+			}),
+			catchError(this.handleError<AppActionResult<void,any>>())
+		);
+	}
+
+	public async getContentAsync (id:string): Promise<AppActionResult<CONTENT,FAILURE>>
+	{
+		return await lastValueFrom(this.getContent(id));
+	}
 }
