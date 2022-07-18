@@ -37,7 +37,7 @@ private static readonly Name:string = 'Module Tests';
 	{
 		this.showProgress = true;
 
-	const test:Promise<boolean> = this.crossTest.TestSlms7680Async();
+	const test:Promise<boolean> = this.crossTest.testSlms7657Async();
 		test.then(success =>
 		{
 			console.log(success);

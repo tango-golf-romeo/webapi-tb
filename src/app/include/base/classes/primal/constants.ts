@@ -11,7 +11,8 @@ export enum ApiServices
 	Node = 'Probe/Node',
 	Proc = 'Cleanup/Proc',
 	StatePanel = 'Frontend/StatePanel',
-	User = 'Admin/User'
+	User = 'Admin/User',
+	Workspace = 'Frontend/Workspace'
 }
 
 export class Constants

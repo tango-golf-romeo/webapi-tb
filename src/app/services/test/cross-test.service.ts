@@ -6,6 +6,7 @@ import {RcvMonitoringObjectResponseItem} from 'src/app/include/rcv/classes/rcv-m
 import {RcvNodeResponseItem} from 'src/app/include/rcv/classes/rcv-node-response-item';
 import {RcvNodeSettingsResponseItem} from 'src/app/include/rcv/classes/rcv-node-settings-response-item';
 import {RcvUserResponseItem} from 'src/app/include/rcv/classes/rcv-user-response-item';
+import {RcvWorkspaceResponseItem} from 'src/app/include/rcv/classes/rcv-workspace-response-item';
 import {RcvGroupResponseItem} from 'src/app/include/rcv/classes/rec-group-response-item';
 
 import {TestGroupService} from './test-group.service';
@@ -14,6 +15,7 @@ import {TestLocationService} from './test-location.service';
 import {TestMonitoringObjectService} from './test-monitoring-object.service';
 import {TestNodeService} from './test-node.service';
 import {TestUserService} from './test-user.service';
+import {TestWorkspaceService} from './test-workspace.service';
 
 @Injectable
 ({
@@ -26,7 +28,8 @@ export class CrossTestService
     private location:TestLocationService,
     private mo:TestMonitoringObjectService,
     private node:TestNodeService,
-    private user:TestUserService)
+    private user:TestUserService,
+    private workspace:TestWorkspaceService)
   {
   }
 
@@ -92,7 +95,7 @@ export class CrossTestService
     return true;
   }
 
-  public async TestSlms7680Async (): Promise<boolean>
+  public async testSlms7680Async (): Promise<boolean>
   {
   const locType:RcvLocationTypeResponseItem|null = await this.locationType.createLocationTypeAsync2('tgu loctype 1',
     'tgu test loca type 1.');
@@ -106,6 +109,18 @@ export class CrossTestService
 
   const bDeleteLoc = await this.location.deleteLocationAsync(locId);
   const bDeleteLocType = await this.locationType.deleteLocationTypeAsync(locTypeId);
+
+    return true;
+  }
+
+  public async testSlms7657Async (): Promise<boolean>
+  {
+  const res = await this.mo.getAllObjectsAsync();
+  const allMpegs = res.filter(e => e.hasMosaic && e.hasPreview && e.objectType == 'mpegService');
+  const mpegsWithUrl =  allMpegs.filter(e => (e.url ?? '').trim().length);
+
+  const wss:RcvWorkspaceResponseItem[] = await this.workspace.getAllWorkspacesAsync();
+  const ws = wss.find(e => e.name == 'Node MP 7  mpeg ts+HLS');
 
     return true;
   }

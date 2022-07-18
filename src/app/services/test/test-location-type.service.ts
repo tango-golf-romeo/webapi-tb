@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+
 import {RcvLocationTypeResponseItem} from 'src/app/include/rcv/classes/rcv-location-type-response-item';
 import {XmtLocationTypeItemFinder} from 'src/app/include/xmt/classes/find/xmt-location-type-item-finder';
 import {XmtLocationTypeSetItem} from 'src/app/include/xmt/classes/xmt-location-type-set-item';
