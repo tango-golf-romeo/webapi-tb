@@ -5,6 +5,7 @@ import {Observable,OperatorFunction,of,catchError,tap,map,ObservableInput,retry,
 
 import {ApiServices,Constants} from '../../include/base/classes/primal/constants';
 import {ActionResultHttp} from '../../include/base/classes/rcv/action-result-http';
+import {HttpUrlOptions} from 'src/app/include/base/classes/primal/http-url-options';
 
 @Injectable
 ({
@@ -24,9 +25,9 @@ private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpres
 		return this.m_sApiPath;
 	}
 
-	public invokePost<SUCCESS,FAILURE> (svc:ApiServices, op:string|null, input:any = {}): Observable<ActionResultHttp<SUCCESS|FAILURE>>
+	public invokePost<SUCCESS,FAILURE> (svc:ApiServices, op:string|null, opts:HttpUrlOptions|null = null, input:any = {}): Observable<ActionResultHttp<SUCCESS|FAILURE>>
 	{
-	const sPath:string = this.getPath(svc,op);
+	const sPath:string = this.getPath(svc,op,opts);
 		
 		return this.http.post<HttpResponse<SUCCESS|FAILURE>>(sPath,input,this.getOptions()).pipe
 		(
@@ -36,26 +37,9 @@ private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpres
 		);
 	}
 
-	public invokeGet<SUCCESS,FAILURE> (svc:ApiServices, op:string|null, input:any = {}): Observable<ActionResultHttp<SUCCESS|FAILURE>>
+	public invokeGet<SUCCESS,FAILURE> (svc:ApiServices, op:string|null, opts:HttpUrlOptions|null = null): Observable<ActionResultHttp<SUCCESS|FAILURE>>
 	{
-	let sPath:string = this.getPath(svc,op);
-	const sType:string = typeof input;
-
-		if (sType == 'string')
-		{
-		const qs = new HttpParams({fromString:input}).toString();
-			sPath += ('?' + qs);
-		}
-		else if (sType == 'number')
-		{
-			//qs = new HttpParams({fromString:input.toString()}).toString();
-			sPath += '/' + input.toString();
-		}
-		else if (sType == 'object')
-		{
-		const qs = new HttpParams({fromObject:input}).toString();
-			sPath += ('?' + qs);
-		}
+	let sPath:string = this.getPath(svc,op,opts);
 
 		return this.http.get<HttpResponse<SUCCESS|FAILURE>>(sPath,this.getOptions()).pipe
 		(
@@ -77,9 +61,9 @@ private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpres
 		);
 	}
 
-	public invokeDelete<SUCCESS,FAILURE> (svc:ApiServices, op:string|null, id:string|null = null): Observable<ActionResultHttp<SUCCESS|FAILURE>>
+	public invokeDelete<SUCCESS,FAILURE> (svc:ApiServices, op:string|null, opts:HttpUrlOptions|null = null): Observable<ActionResultHttp<SUCCESS|FAILURE>>
 	{
-	const sPath:string = this.getPath(svc,op,id);
+	const sPath:string = this.getPath(svc,op,opts);
 		
 		return this.http.delete<HttpResponse<SUCCESS|FAILURE>>(sPath,this.getOptions()).pipe
 		(
@@ -89,20 +73,25 @@ private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpres
 		);
 	}
 
-	private getPath (svc:ApiServices, op:string|null, id:string|null = null): string
+	private getPath (svc:ApiServices, op:string|null, opts:HttpUrlOptions|null = null): string
 	{
 	const s = (svc ?? '').trim();
 		if (s.length < 1) throw 'Service base relative path cannot be empty.';
 
+	let ret:string = `${this.apiPath}${svc}`;
+
 	const sOper:string = (op ?? '').trim();
-	const sId:string = (id ?? '').trim();
-	
-	let ret:string = `${this.apiPath}${svc}/`;
-		if (sOper.length > 0) ret += `${sOper}`;
-		if (sId.length > 0)
+		if (sOper.length > 0)
 		{
-			if (sOper.length > 0) ret += '/';
-			ret += `${sId}`;
+			if (ret[ret.length - 1] != '/') ret += '/';
+
+			ret += sOper;
+
+			if (opts)
+			{
+			const sTail:string = opts.getTail();
+				if (sTail.length > 0) ret += sTail;
+			}
 		}
 
 		return ret;

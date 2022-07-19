@@ -12,6 +12,7 @@ import {IXmtNodeItemFinder} from 'src/app/include/xmt/interfaces/find/ixmt-node-
 
 import {AppFrontBaseService} from './app-front-base.service';
 import {RcvNodeSettingsResponseItem} from 'src/app/include/rcv/classes/rcv-node-settings-response-item';
+import {HttpUrlOptions} from 'src/app/include/base/classes/primal/http-url-options';
 
 @Injectable
 ({
@@ -45,7 +46,9 @@ export class AppNodeService extends AppFrontBaseService<IXmtNodeSetItem,IXmtNode
 
 	public getSettings (id:number): Observable<AppActionResult<RcvNodeSettingsResponseItem,RcvMessagesResponse>>
 	{
-		return this.comms.invokeGet<RcvNodeSettingsResponseItem,RcvMessagesResponse>(this.path,'GetSettings',id).pipe
+	const opts:HttpUrlOptions = HttpUrlOptions.GetUrlSegment(id);
+
+		return this.comms.invokeGet<RcvNodeSettingsResponseItem,RcvMessagesResponse>(this.path,'GetSettings',opts).pipe
 		(
 			map((res:ActionResultHttp<RcvNodeSettingsResponseItem|RcvMessagesResponse>) =>
 			{

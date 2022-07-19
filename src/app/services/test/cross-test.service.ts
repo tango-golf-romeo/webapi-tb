@@ -6,6 +6,7 @@ import {RcvMonitoringObjectResponseItem} from 'src/app/include/rcv/classes/rcv-m
 import {RcvNodeResponseItem} from 'src/app/include/rcv/classes/rcv-node-response-item';
 import {RcvNodeSettingsResponseItem} from 'src/app/include/rcv/classes/rcv-node-settings-response-item';
 import {RcvUserResponseItem} from 'src/app/include/rcv/classes/rcv-user-response-item';
+import {RcvWorkspaceContentResponseItem} from 'src/app/include/rcv/classes/rcv-workspace-content-response-item';
 import {RcvWorkspaceResponseItem} from 'src/app/include/rcv/classes/rcv-workspace-response-item';
 import {RcvGroupResponseItem} from 'src/app/include/rcv/classes/rec-group-response-item';
 
@@ -15,6 +16,7 @@ import {TestLocationService} from './test-location.service';
 import {TestMonitoringObjectService} from './test-monitoring-object.service';
 import {TestNodeService} from './test-node.service';
 import {TestUserService} from './test-user.service';
+import {TestWebPreviewService} from './test-web-preview.service';
 import {TestWorkspaceService} from './test-workspace.service';
 
 @Injectable
@@ -29,6 +31,7 @@ export class CrossTestService
     private mo:TestMonitoringObjectService,
     private node:TestNodeService,
     private user:TestUserService,
+    private webPreview:TestWebPreviewService,
     private workspace:TestWorkspaceService)
   {
   }
@@ -115,12 +118,41 @@ export class CrossTestService
 
   public async testSlms7657Async (): Promise<boolean>
   {
-  const res = await this.mo.getAllObjectsAsync();
-  const allMpegs = res.filter(e => e.hasMosaic && e.hasPreview && e.objectType == 'mpegService');
-  const mpegsWithUrl =  allMpegs.filter(e => (e.url ?? '').trim().length);
+  const res:RcvMonitoringObjectResponseItem[] = await this.mo.getAllObjectsAsync();
+  //const allMpegs:RcvMonitoringObjectResponseItem[] = res.filter(e => e.hasMosaic && e.hasPreview && e.objectType == 'mpegService');
+  //const mpegsWithUrl:RcvMonitoringObjectResponseItem[] =  allMpegs.filter(e => (e.url ?? '').trim().length);
 
   const wss:RcvWorkspaceResponseItem[] = await this.workspace.getAllWorkspacesAsync();
   const ws = wss.find(e => e.name == 'Node MP 7  mpeg ts+HLS');
+    if (!ws) return false;
+
+  const mos:Set<string> = new Set<string>();
+
+  const contentWorkspace:RcvWorkspaceContentResponseItem|null = await this.workspace.getContentAsync(ws.workspaceID);
+    contentWorkspace?.workspaceWidget.forEach(contentWidget =>
+    {
+      contentWidget.widget.widgetDataSource.analyzeMonitoringObjectList.forEach(amo =>
+      {
+      const mo:string = (amo.monitoringObjectID ?? '').trim();
+        if ((mo.length > 0) && !mos.has(mo)) mos.add(mo);
+      });
+    });
+
+  const targets:RcvMonitoringObjectResponseItem[] = res.filter(e => mos.has(e.monitoringObjectID));
+  const failed:Map<string,{mo:RcvMonitoringObjectResponseItem,err:any}> = new Map<string,{mo:RcvMonitoringObjectResponseItem,err:any}>();
+    for (const target of targets)
+    {
+    const res = await this.webPreview.getPreviewUrlAsync(target.monitoringObjectID);
+      if (!res.result)
+      {
+        if (res.haveFailure)
+          failed.set(target.monitoringObjectID,{mo:target, err:res.failure});
+        else if (res.haveError)
+          failed.set(target.monitoringObjectID,{mo:target, err:res.error});
+        else if (res.haveHttpResult && res.http?.haveError)
+          failed.set(target.monitoringObjectID,{mo:target, err:res.http.error});
+      }
+    }
 
     return true;
   }

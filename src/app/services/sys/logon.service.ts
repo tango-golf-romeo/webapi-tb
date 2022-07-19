@@ -12,6 +12,7 @@ import {RcvUserDataResponseItem} from 'src/app/include/rcv/classes/rcv-user-data
 import {AppBaseMessagesResponse} from 'src/app/include/app/base/classes/app-base-messages-response';
 import {RcvMessagesLoginResponse} from 'src/app/include/rcv/classes/rcv-messages-login-response';
 import {RcvMessagesSessionResponse} from 'src/app/include/rcv/classes/rcv-messages-session-response';
+import {HttpUrlOptions} from 'src/app/include/base/classes/primal/http-url-options';
 
 @Injectable
 ({
@@ -27,7 +28,7 @@ export class LogonService
 	{
 	const data:XmtLoginItem = new XmtLoginItem(usr,pwd);
 
-		return this.comms.invokePost<RcvUserDataResponseItem,AppBaseMessagesResponse>(ApiServices.Login,'CreateLogin',data).pipe
+		return this.comms.invokePost<RcvUserDataResponseItem,AppBaseMessagesResponse>(ApiServices.Login,'CreateLogin',null,data).pipe
 		(
 			map((res:ActionResultHttp<RcvUserDataResponseItem|AppBaseMessagesResponse>) =>
 			{
@@ -59,7 +60,9 @@ export class LogonService
 
 	public logoff (): Observable<boolean>
 	{
-		return this.comms.invokeGet<void,void>(ApiServices.Logout,null,{noredirect:true}).pipe
+	const opts:HttpUrlOptions = HttpUrlOptions.GetQueryString({noredirect:true});
+
+		return this.comms.invokeGet<void,void>(ApiServices.Logout,null,opts).pipe
 		(
 			map((res:ActionResultHttp<void|void>) =>
 			{

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 
 import {ApiServices} from 'src/app/include/base/classes/primal/constants';
+import {RcvWorkspaceContentResponseItem} from 'src/app/include/rcv/classes/rcv-workspace-content-response-item';
 import {RcvWorkspaceResponseItem} from 'src/app/include/rcv/classes/rcv-workspace-response-item';
 import {IXmtWorkspaceItemFinder} from 'src/app/include/xmt/interfaces/find/ixmt-workspace-item-finder';
 import {IXmtWorkspaceSetItem} from 'src/app/include/xmt/interfaces/ixmt-workspace-set-item';
@@ -11,7 +12,7 @@ import {AppFrontBaseService} from './app-front-base.service';
 ({
   providedIn: 'root'
 })
-export class AppWorkspaceService extends AppFrontBaseService<IXmtWorkspaceSetItem,IXmtWorkspaceItemFinder,RcvWorkspaceResponseItem,void>
+export class AppWorkspaceService extends AppFrontBaseService<IXmtWorkspaceSetItem,IXmtWorkspaceItemFinder,RcvWorkspaceResponseItem,RcvWorkspaceContentResponseItem>
 {
 	protected get path (): ApiServices
 	{

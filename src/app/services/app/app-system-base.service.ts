@@ -17,7 +17,7 @@ export abstract class AppSystemBaseService<INPUT,FIND,SUCCESS,FAILURE = RcvMessa
 	{
 	const data:FIND = obj;
 
-		return this.comms.invokePost<SUCCESS[],FAILURE>(this.path,'Find',data).pipe
+		return this.comms.invokePost<SUCCESS[],FAILURE>(this.path,'Find',null,data).pipe
 		(
 			map((res:ActionResultHttp<SUCCESS[]|FAILURE>) =>
 			{

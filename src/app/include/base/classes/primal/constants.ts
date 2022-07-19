@@ -12,6 +12,7 @@ export enum ApiServices
 	Proc = 'Cleanup/Proc',
 	StatePanel = 'Frontend/StatePanel',
 	User = 'Admin/User',
+	WebPreview = 'Frontend/WebPreview',
 	Workspace = 'Frontend/Workspace'
 }
 

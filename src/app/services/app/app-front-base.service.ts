@@ -7,6 +7,7 @@ import {RcvMessagesResponse} from 'src/app/include/rcv/classes/rcv-messages-resp
 import {AppActionResult} from 'src/app/include/base/classes/rcv/app-action-result';
 
 import {AppBaseService} from './app-base.service';
+import {HttpUrlOptions} from 'src/app/include/base/classes/primal/http-url-options';
 
 @Injectable
 ({
@@ -18,7 +19,7 @@ export abstract class AppFrontBaseService<INPUT,FIND,SUCCESS,CONTENT,FAILURE = R
 	{
 	const data:INPUT = obj;
 
-		return this.comms.invokePost<SUCCESS,FAILURE>(this.path,'Apply',data).pipe
+		return this.comms.invokePost<SUCCESS,FAILURE>(this.path,'Apply',null,data).pipe
 		(
 			map((res:ActionResultHttp<SUCCESS|FAILURE>) =>
 			{
@@ -38,7 +39,7 @@ export abstract class AppFrontBaseService<INPUT,FIND,SUCCESS,CONTENT,FAILURE = R
 	{
 	const data:FIND = obj;
 
-		return this.comms.invokePost<SUCCESS[],FAILURE>(this.path,'Find',data).pipe
+		return this.comms.invokePost<SUCCESS[],FAILURE>(this.path,'Find',null,data).pipe
 		(
 			map((res:ActionResultHttp<SUCCESS[]|FAILURE>) =>
 			{
@@ -56,7 +57,9 @@ export abstract class AppFrontBaseService<INPUT,FIND,SUCCESS,CONTENT,FAILURE = R
 
 	private invokeDelete (id:string): Observable<AppActionResult<void,FAILURE>>
 	{
-		return this.comms.invokeDelete<void,FAILURE>(this.path,'Delete',id.toString()).pipe
+	const opts:HttpUrlOptions = HttpUrlOptions.GetUrlSegment(id);
+
+		return this.comms.invokeDelete<void,FAILURE>(this.path,'Delete',opts).pipe
 		(
 			map((res:ActionResultHttp<void|FAILURE>) =>
 			{
@@ -92,7 +95,9 @@ export abstract class AppFrontBaseService<INPUT,FIND,SUCCESS,CONTENT,FAILURE = R
 
 	public getContent (id:string): Observable<AppActionResult<CONTENT,FAILURE>>
 	{
-		return this.comms.invokeGet<CONTENT,FAILURE>(this.path,'GetContent',id).pipe
+	const opts:HttpUrlOptions = HttpUrlOptions.GetUrlSegment(id);
+
+		return this.comms.invokeGet<CONTENT,FAILURE>(this.path,'GetContent',opts).pipe
 		(
 			map((res:ActionResultHttp<CONTENT|FAILURE>) =>
 			{

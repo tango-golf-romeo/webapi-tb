@@ -45,7 +45,7 @@ private mPayload:UrlQueryPayload = null;
 		this.mPayload = val;
 	}
 
-	public get tail (): string
+	public getTail (): string
 	{
 	const sType:string = typeof this.payload;
 
