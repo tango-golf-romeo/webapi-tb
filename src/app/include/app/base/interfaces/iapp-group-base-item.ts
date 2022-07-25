@@ -1,5 +1,5 @@
-export interface IAppGroupBaseItem
+import {IAppBaseItem} from "./iapp-base-item";
+
+export interface IAppGroupBaseItem extends IAppBaseItem
 {
-	name: string;
-	description: string;
 }

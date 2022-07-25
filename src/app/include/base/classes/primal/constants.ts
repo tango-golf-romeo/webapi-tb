@@ -1,4 +1,4 @@
-export enum ApiServices
+export enum ApiServices //controllers
 {
 	Dummy = 'Test/Dummy',
 	Group = 'Admin/Group',
@@ -10,6 +10,7 @@ export enum ApiServices
 	Mosaic = 'Frontend/Mosaic',
 	Node = 'Probe/Node',
 	Proc = 'Cleanup/Proc',
+	Script = 'Storage/[controller]',
 	StatePanel = 'Frontend/StatePanel',
 	User = 'Admin/User',
 	WebPreview = 'Frontend/WebPreview',

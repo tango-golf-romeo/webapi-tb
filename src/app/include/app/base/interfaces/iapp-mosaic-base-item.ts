@@ -1,7 +1,7 @@
-export interface IAppMosaicBaseItem
+import {IAppBaseItem} from "./iapp-base-item";
+
+export interface IAppMosaicBaseItem extends IAppBaseItem
 {
-	name: string;
-	description: string;
 	columnCount: number;
 	rowCount: number;
 	renderingRange: number;

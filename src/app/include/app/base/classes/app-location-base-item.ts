@@ -1,15 +1,8 @@
 import {IAppLocationBaseItem} from "../interfaces/iapp-location-base-item";
+import {AppBaseItem} from "./app-base-item";
 
-export class AppLocationBaseItem implements IAppLocationBaseItem
+export class AppLocationBaseItem extends AppBaseItem implements IAppLocationBaseItem
 {
-public name: string = '';
 public parentID?: number;
 public locationTypeID?: number;
-public description: string = '';
-
-	constructor (sName:string, sDesc:string)
-	{
-		this.name = sName;
-		this.description = sDesc;
-	}
 }

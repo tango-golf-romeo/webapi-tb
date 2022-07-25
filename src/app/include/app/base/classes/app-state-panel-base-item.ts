@@ -1,13 +1,6 @@
 import {IAppStatePanelBaseItem} from "../interfaces/iapp-state-panel-base-item";
+import {AppBaseItem} from "./app-base-item";
 
-export class AppStatePanelBaseItem implements IAppStatePanelBaseItem
+export class AppStatePanelBaseItem extends AppBaseItem implements IAppStatePanelBaseItem
 {
-public name: string = '';
-public description: string = '';
-
-	constructor (sName:string, sDesc:string)
-	{
-		this.name = sName;
-		this.description = sDesc;
-	}
 }

@@ -1,7 +1,7 @@
-export interface IAppLocationBaseItem
+import {IAppBaseItem} from "./iapp-base-item";
+
+export interface IAppLocationBaseItem extends IAppBaseItem
 {
-	name: string;
 	parentID?: number;
 	locationTypeID?: number;
-	description: string;
 }

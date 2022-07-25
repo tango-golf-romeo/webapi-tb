@@ -1,7 +1,7 @@
-export interface IAppWorkspaceBaseItem
+import {IAppBaseItem} from "./iapp-base-item";
+
+export interface IAppWorkspaceBaseItem extends IAppBaseItem
 {
-	name: string;
-	description: string;
 	isDisabled: boolean;
 	jsonUIConf: string;
 	tags: string[];

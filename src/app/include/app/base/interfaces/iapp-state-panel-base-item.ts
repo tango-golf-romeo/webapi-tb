@@ -1,5 +1,5 @@
-export interface IAppStatePanelBaseItem
+import {IAppBaseItem} from "./iapp-base-item";
+
+export interface IAppStatePanelBaseItem extends IAppBaseItem
 {
-	name: string;
-	description: string;
 }

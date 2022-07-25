@@ -1,11 +1,6 @@
-export class AppGroupBaseItem
-{
-public name: string = '';
-public description: string = '';
+import {IAppGroupBaseItem} from "../interfaces/iapp-group-base-item";
+import {AppBaseItem} from "./app-base-item";
 
-	constructor (sName:string, sDesc:string)
-	{
-		this.name = sName;
-		this.description = sDesc;
-	}
+export class AppGroupBaseItem extends AppBaseItem implements IAppGroupBaseItem
+{
 }

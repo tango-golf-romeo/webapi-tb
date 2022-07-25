@@ -5,7 +5,7 @@ import {AppDataFilter} from "./app-data-filter";
 
 export class AppWidgetDataSource implements IAppWidgetDataSource
 {
-	dataFilter: AppDataFilter = new AppDataFilter();
-	analyzeMonitoringObjectList: AppAnalyzeMonitoringObjectItem[] = [];
-	analyzerMeasuresList: AppAnalyzerMeasures[] = [];
+public dataFilter: AppDataFilter = new AppDataFilter();
+public analyzeMonitoringObjectList: AppAnalyzeMonitoringObjectItem[] = [];
+public analyzerMeasuresList: AppAnalyzerMeasures[] = [];
 }

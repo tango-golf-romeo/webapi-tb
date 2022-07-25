@@ -1,7 +1,7 @@
-export interface IAppNodeBaseItem
+import {IAppBaseItem} from "./iapp-base-item";
+
+export interface IAppNodeBaseItem extends IAppBaseItem
 {
-	name: string;
-	description: string;
 	xmlParameters?: string;
 	locationID?: number;
 	nodeType: string;
