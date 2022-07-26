@@ -4,5 +4,5 @@ export interface IRcvWorkspaceWidgetContentResponseItem
 {
 	widgetID: string;
 	jsonUIConf: string;
-	widget: IRcvWidgetResponseItem;
+	widget: IRcvWidgetResponseItem|null;
 }

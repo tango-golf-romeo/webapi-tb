@@ -5,5 +5,5 @@ export class RcvWorkspaceWidgetContentResponseItem implements IRcvWorkspaceWidge
 {
 public widgetID: string = '';
 public jsonUIConf: string = '';
-public widget: RcvWidgetResponseItem = new RcvWidgetResponseItem();
+public widget: RcvWidgetResponseItem|null = null;
 }

@@ -1,10 +1,13 @@
 import {Injectable} from '@angular/core';
+import {AppMeasureItem} from 'src/app/include/app/base/classes/app-measure-item';
+import {AppScriptMeasureContentItem} from 'src/app/include/app/base/classes/app-script-measure-content-item';
 
 import {RcvLocationResponseItem} from 'src/app/include/rcv/classes/rcv-location-response-item';
 import {RcvLocationTypeResponseItem} from 'src/app/include/rcv/classes/rcv-location-type-response-item';
 import {RcvMonitoringObjectResponseItem} from 'src/app/include/rcv/classes/rcv-monitoring-object-response-item';
 import {RcvNodeResponseItem} from 'src/app/include/rcv/classes/rcv-node-response-item';
 import {RcvNodeSettingsResponseItem} from 'src/app/include/rcv/classes/rcv-node-settings-response-item';
+import {RcvScriptResponseItem} from 'src/app/include/rcv/classes/rcv-script-response-item';
 import {RcvUserResponseItem} from 'src/app/include/rcv/classes/rcv-user-response-item';
 import {RcvWorkspaceContentResponseItem} from 'src/app/include/rcv/classes/rcv-workspace-content-response-item';
 import {RcvWorkspaceResponseItem} from 'src/app/include/rcv/classes/rcv-workspace-response-item';
@@ -15,6 +18,8 @@ import {TestLocationTypeService} from './test-location-type.service';
 import {TestLocationService} from './test-location.service';
 import {TestMonitoringObjectService} from './test-monitoring-object.service';
 import {TestNodeService} from './test-node.service';
+import {TestScriptMeasureService} from './test-script-measure.service';
+import {TestScriptService} from './test-script.service';
 import {TestUserService} from './test-user.service';
 import {TestWebPreviewService} from './test-web-preview.service';
 import {TestWorkspaceService} from './test-workspace.service';
@@ -32,7 +37,9 @@ export class CrossTestService
     private node:TestNodeService,
     private user:TestUserService,
     private webPreview:TestWebPreviewService,
-    private workspace:TestWorkspaceService)
+    private workspace:TestWorkspaceService,
+    private script:TestScriptService,
+    private scriptMeasure:TestScriptMeasureService)
   {
   }
 
@@ -131,11 +138,14 @@ export class CrossTestService
   const contentWorkspace:RcvWorkspaceContentResponseItem|null = await this.workspace.getContentAsync(ws.workspaceID);
     contentWorkspace?.workspaceWidget.forEach(contentWidget =>
     {
-      contentWidget.widget.widgetDataSource.analyzeMonitoringObjectList.forEach(amo =>
+      if (contentWidget.widget)
       {
-      const mo:string = (amo.monitoringObjectID ?? '').trim();
-        if ((mo.length > 0) && !mos.has(mo)) mos.add(mo);
-      });
+        contentWidget.widget.widgetDataSource.analyzeMonitoringObjectList.forEach(amo =>
+        {
+        const mo:string = (amo.monitoringObjectID ?? '').trim();
+          if ((mo.length > 0) && !mos.has(mo)) mos.add(mo);
+        });
+      }
     });
 
   const targets:RcvMonitoringObjectResponseItem[] = res.filter(e => mos.has(e.monitoringObjectID));
@@ -152,6 +162,84 @@ export class CrossTestService
         else if (res.haveHttpResult && res.http?.haveError)
           failed.set(target.monitoringObjectID,{mo:target, err:res.http.error});
       }
+    }
+
+    return true;
+  }
+
+  public async testMultiplePins (): Promise<boolean>
+  {
+  const DeleteMeasures:boolean = false;
+
+  const scripts:RcvScriptResponseItem[] = await this.script.getAllScriptsAsync();
+  const targetScript:RcvScriptResponseItem|undefined = scripts.find(e => e.name == 'test-pins.py');
+    if (!targetScript) return false;
+
+  const content:AppScriptMeasureContentItem|null = await this.scriptMeasure.getContentAsync(targetScript.scriptID ?? '');
+    if (!content) return false; //we must have the obj
+
+    if (content.measures?.length && DeleteMeasures)
+    {
+    const a = 1; //do something
+    }
+
+    if ((content.measures?.length ?? 0) < 1)
+    {
+      content.measures = [];
+
+      for (let i:number = 0; i < 1000; i++)
+      {
+      const sIdx:string = i.toString().padStart(3,'0');
+      const msr:AppMeasureItem = new AppMeasureItem('tgu msr ' + sIdx,'tgu test measure ' + sIdx);
+        msr.columnName = 'mtgu' + sIdx;
+        msr.dataType = 'real';
+        msr.unit = 'V';
+        msr.orderBy = i + 1;
+
+        content.measures.push(msr);
+      }
+
+    const content2:AppScriptMeasureContentItem|null = await this.scriptMeasure.setContentAsync(content);
+    const lenx = content2?.measures?.length ?? 0; //do something
+    }
+
+    return true;
+  }
+
+  public async testMultipleIntPins (): Promise<boolean>
+  {
+  const DeleteMeasures:boolean = false;
+
+  const scripts:RcvScriptResponseItem[] = await this.script.getAllScriptsAsync();
+  const targetScript:RcvScriptResponseItem|undefined = scripts.find(e => e.name == 'test-int-pins.py');
+    if (!targetScript) return false;
+
+  const content:AppScriptMeasureContentItem|null = await this.scriptMeasure.getContentAsync(targetScript.scriptID ?? '');
+    if (!content) return false; //we must have the obj
+
+    if (content.measures?.length && DeleteMeasures)
+    {
+    const a = 1; //do something
+    }
+
+    if ((content.measures?.length ?? 0) < 1)
+    {
+      content.measures = [];
+
+      for (let i:number = 0; i < 1000; i++)
+      {
+      const sIdx:string = i.toString().padStart(3,'0');
+      const msr:AppMeasureItem = new AppMeasureItem('tgu msr ' + sIdx,'tgu test measure ' + sIdx);
+        msr.columnName = 'mtgu' + sIdx;
+        msr.dataType = 'int';
+        msr.unit = 'V';
+        msr.orderBy = i + 1;
+
+        content.measures.push(msr);
+      }
+
+    const content2:AppScriptMeasureContentItem|null = await this.scriptMeasure.setContentAsync(content);
+    const lenx = content2?.measures?.length ?? 0; //do something
     }
 
     return true;

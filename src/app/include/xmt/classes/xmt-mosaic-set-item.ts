@@ -8,6 +8,8 @@ public isHidden: boolean = false;
 
 	constructor (sName:string, sDesc:string, iNodeId:number)
 	{
-		super(sName,sDesc,iNodeId);
+		super(sName,sDesc);
+
+		this.nodeID = iNodeId;
 	}
 }

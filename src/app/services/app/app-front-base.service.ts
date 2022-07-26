@@ -112,4 +112,24 @@ export abstract class AppFrontBaseService<INPUT,FIND,SUCCESS,CONTENT,FAILURE = R
 	{
 		return await lastValueFrom(this.getContent(id));
 	}
+
+	public setContent (obj:CONTENT): Observable<AppActionResult<CONTENT,FAILURE>>
+	{
+	const data:CONTENT = obj;
+
+		return this.comms.invokePost<CONTENT,FAILURE>(this.path,'SetContent',null,data).pipe
+		(
+			map((res:ActionResultHttp<CONTENT|FAILURE>) =>
+			{
+			const ret:AppActionResult<CONTENT,FAILURE> = new AppActionResult<CONTENT,FAILURE>(res);
+        return ret;
+			}),
+			catchError(this.handleError<AppActionResult<void,any>>())
+		);
+	}
+
+	public async setContentAsync (obj:CONTENT): Promise<AppActionResult<CONTENT,FAILURE>>
+	{
+		return await lastValueFrom(this.setContent(obj));
+	}
 }
