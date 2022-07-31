@@ -37,7 +37,7 @@ private static readonly Name:string = 'Module Tests';
 	{
 		this.showProgress = true;
 
-	const test:Promise<boolean> = this.crossTest.testMultipleIntPins();
+	const test:Promise<boolean> = this.crossTest.testSlms7851Async();
 		test.then(success =>
 		{
 			console.log(success);

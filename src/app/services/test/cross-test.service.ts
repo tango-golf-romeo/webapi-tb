@@ -244,4 +244,23 @@ export class CrossTestService
 
     return true;
   }
+
+  public async testSlms7851Async (): Promise<boolean>
+  {
+  const scripts:RcvScriptResponseItem[] = await this.script.getAllScriptsAsync();
+  const targetScript:RcvScriptResponseItem|undefined = scripts.find(e => e.name == 'slms7851.py');
+    if (!targetScript) return false;
+
+  const content:AppScriptMeasureContentItem|null = await this.scriptMeasure.getContentAsync(targetScript.scriptID ?? '');
+    if (!content) return false; //we must have the obj
+
+  const m3:AppMeasureItem|undefined = content.measures.find(e => e.columnName == 'm3');
+    if (!m3) return false;
+
+    m3.dataType = 'real';
+
+  const content2:AppScriptMeasureContentItem|null = await this.scriptMeasure.setContentAsync(content);
+
+    return true;
+  }
 }
