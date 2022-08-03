@@ -12,30 +12,31 @@
 				<img mat-card-image src="/assets/img/banner-maintenance.jpg" alt="Logon">
 				<mat-card-content>
 					<p>
-						<mat-form-field appearance="fill" class="w60pct">
+						<mat-form-field appearance="fill" class="w80pct">
 							<mat-icon matSuffix>language</mat-icon>
 							<mat-label>Target</mat-label>
-							<input id="txtTarget" type="text" [(ngModel)]="target" readonly matInput placeholder="Target server address"
-							[formControl]="ctrlTarget">
+							<input id="txtTarget" #txtTarget type="text" [(ngModel)]="target" matInput readonly placeholder="Target server address"
+							[formControl]="fc_txtTarget">
+							<mat-hint>Indicates current target. Used for reference only.</mat-hint>
 						</mat-form-field>
 					</p>
 					<p>
-						<mat-form-field appearance="fill" class="w60pct">
+						<mat-form-field appearance="fill" class="w80pct">
 							<mat-icon matSuffix>person</mat-icon>
 							<mat-label>Username</mat-label>
 							<input id="txtUsername" #txtUsername type="text" [(ngModel)]="username" matInput required cdkFocusInitial placeholder="Enter your username"
-							[formControl]="ctrlUsername">
-							<mat-error *ngIf="ctrlUsername.invalid">{{getErrorUsername()}}</mat-error>
+							[formControl]="fc_txtUsername">
+							<mat-error *ngIf="fc_txtUsername.invalid">{{getErrorUsername()}}</mat-error>
 							<mat-hint>* denotes required field</mat-hint>
 						</mat-form-field>
 					</p>
 					<p>
-						<mat-form-field appearance="fill" class="w60pct">
+						<mat-form-field appearance="fill" class="w80pct">
 							<mat-icon matSuffix>vpn_key</mat-icon>
 							<mat-label>Password</mat-label>
 							<input id="txtPassword" type="password" [(ngModel)]="password" matInput placeholder="Enter your password"
-							[formControl]="ctrlPassword">
-							<mat-error *ngIf="ctrlPassword.invalid">{{getErrorPassword()}}</mat-error>
+							[formControl]="fc_txtPassword">
+							<mat-error *ngIf="fc_txtPassword.invalid">{{getErrorPassword()}}</mat-error>
 							<mat-hint>You can click on the eye to show/hide the typed text.</mat-hint>
 						</mat-form-field>
 					</p>

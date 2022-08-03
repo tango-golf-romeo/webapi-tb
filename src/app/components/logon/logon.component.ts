@@ -26,9 +26,9 @@ username:string = '';
 password:string = '';
 target:string = '';
 
-ctrlTarget:FormControl = new FormControl('');
-ctrlUsername:FormControl = new FormControl('',[Validators.required]);
-ctrlPassword:FormControl = new FormControl('');
+fc_txtTarget:FormControl = new FormControl('');
+fc_txtUsername:FormControl = new FormControl('',[Validators.required]);
+fc_txtPassword:FormControl = new FormControl('');
 
 private ignoreInvalidUsername:boolean = false;
 
@@ -55,7 +55,7 @@ private ignoreInvalidUsername:boolean = false;
 
 	getErrorUsername (): string|undefined
 	{
-		return (this.ctrlUsername.hasError('required') && !this.ignoreInvalidUsername)?'You must enter a username.':undefined;
+		return (this.fc_txtUsername.hasError('required') && !this.ignoreInvalidUsername)?'You must enter a username.':undefined;
 	}
 
 	getErrorPassword (): string|undefined
@@ -78,8 +78,8 @@ private ignoreInvalidUsername:boolean = false;
 
 	onClickReset (event:any): void
 	{
-		this.ctrlUsername.reset();
-		this.ctrlPassword.reset();
+		this.fc_txtUsername.reset();
+		this.fc_txtPassword.reset();
 	}
 
 	onClickRetarget (event:any): void
@@ -91,9 +91,6 @@ private ignoreInvalidUsername:boolean = false;
 	private doLogon (): void
 	{
 		this.showProgress = true;
-
-		if (this.username.trim().length < 1)
-			this.ctrlUsername.setErrors({'You must enter a username.':true});
 
 		this.logon.logon(this.username,this.password).subscribe
 		({

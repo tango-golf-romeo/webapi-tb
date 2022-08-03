@@ -1,17 +1,16 @@
-import {Component,OnInit} from '@angular/core';
+import {Component,OnInit, ViewChild} from '@angular/core';
 import {FormControl,Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {MatDialog} from '@angular/material/dialog';
-import {MatInput} from '@angular/material/input';
 
-import {Constants} from 'src/app/include/base/classes/primal/constants';
 import {RegularBaseComponent} from 'src/app/include/base/classes/ui/regular-base/regular-base.component';
 
 import {LogonService} from '../../services/sys/logon.service';
 import {ConfigService} from 'src/app/services/sys/config.service';
 import {TargetAddress} from 'src/app/classes/target-address';
+import {MatInput} from '@angular/material/input';
 
 @Component
 ({
@@ -21,9 +20,12 @@ import {TargetAddress} from 'src/app/classes/target-address';
 })
 export class TargetComponent extends RegularBaseComponent implements OnInit
 {
+@ViewChild('txtTarget') txtTarget!: MatInput;
+
 target:string = '';
 
-ctrlTarget:FormControl = new FormControl('');
+fc_txtTarget:FormControl = new FormControl('',[Validators.required]);
+fc_cbxTarget:FormControl = new FormControl('');
 
   constructor (rt:Router, svcLogon:LogonService, ctrlBottomSheet:MatBottomSheet, dlg:MatDialog, private config:ConfigService)
   {
@@ -34,6 +36,17 @@ ctrlTarget:FormControl = new FormControl('');
   {
     this.resetTarget();
   }
+
+	ngAfterViewInit (): void
+	{
+	const obj:any = this.txtTarget;
+		obj?.nativeElement?.focus();
+	}
+
+	getErrorTarget (): string|undefined
+	{
+		return this.fc_txtTarget.hasError('required')?'You must enter a valid URL to server.':undefined;
+	}
 
 	onClickTarget (event:any): void
 	{

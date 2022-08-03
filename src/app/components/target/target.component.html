@@ -12,11 +12,22 @@
 				<img mat-card-image src="/assets/img/banner-maintenance.jpg" alt="Logon">
 				<mat-card-content>
 					<p>
-						<mat-form-field appearance="fill" class="w60pct">
+						<mat-form-field appearance="fill" class="w80pct">
 							<mat-icon matSuffix>language</mat-icon>
-							<mat-label>Target</mat-label>
-							<input id="txtTarget" type="text" [(ngModel)]="target" readonly matInput placeholder="Target server address"
-							[formControl]="ctrlTarget">
+							<mat-label>New Target</mat-label>
+							<input id="txtTarget" #txtTarget type="text" [(ngModel)]="target" matInput required placeholder="Target server address"
+							[formControl]="fc_txtTarget">
+							<mat-error *ngIf="fc_txtTarget.invalid">{{getErrorTarget()}}</mat-error>
+							<mat-hint>Specify new target or select from already stored targets below.</mat-hint>
+						</mat-form-field>
+					</p>
+					<p>
+						<mat-form-field appearance="fill" class="w80pct">
+							<mat-icon matSuffix>language</mat-icon>
+							<mat-label>Stored Targets</mat-label>
+							<mat-select #cbxTarget required placeholder="Target server address" [formControl]="fc_cbxTarget" [(ngModel)]="target" [placeholder]="target">
+								<mat-option [value]="target">{{target}}</mat-option>
+							</mat-select>
 						</mat-form-field>
 					</p>
 				</mat-card-content>
