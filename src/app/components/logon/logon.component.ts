@@ -1,14 +1,16 @@
-import {Component,OnInit} from '@angular/core';
+import {Component,OnInit,ViewChild} from '@angular/core';
 import {FormControl,Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {MatDialog} from '@angular/material/dialog';
+import {MatInput} from '@angular/material/input';
 
-import {ApiServices, Constants} from 'src/app/include/base/classes/primal/constants';
+import {Constants} from 'src/app/include/base/classes/primal/constants';
 import {RegularBaseComponent} from 'src/app/include/base/classes/ui/regular-base/regular-base.component';
 
 import {LogonService} from '../../services/sys/logon.service';
+import {ConfigService} from 'src/app/services/sys/config.service';
 
 @Component
 ({
@@ -18,13 +20,19 @@ import {LogonService} from '../../services/sys/logon.service';
 })
 export class LogonComponent extends RegularBaseComponent implements OnInit
 {
+@ViewChild('txtUsername') txtUsername!: MatInput;
+
 username:string = '';
 password:string = '';
+target:string = '';
 
-	ctrlUsername:FormControl = new FormControl('',[Validators.required]);
-	ctrlPassword:FormControl = new FormControl('');
+ctrlTarget:FormControl = new FormControl('');
+ctrlUsername:FormControl = new FormControl('',[Validators.required]);
+ctrlPassword:FormControl = new FormControl('');
 
-  constructor (rt:Router, svcLogon:LogonService, ctrlBottomSheet:MatBottomSheet, dlg:MatDialog)
+private ignoreInvalidUsername:boolean = false;
+
+  constructor (rt:Router, svcLogon:LogonService, ctrlBottomSheet:MatBottomSheet, dlg:MatDialog, private config:ConfigService)
   {
     super(rt,svcLogon,ctrlBottomSheet,dlg);
   }
@@ -32,11 +40,22 @@ password:string = '';
   ngOnInit (): void
   {
     document.title = Constants.Name + " - System Logon";
+
+		this.target = this.config.config.targetAddress.url;
+
+	const obj:any = this.txtUsername;
+		obj?.nativeElement?.focus();
   }
+
+	ngAfterViewInit (): void
+	{
+	const obj:any = this.txtUsername;
+		obj?.nativeElement?.focus();
+	}
 
 	getErrorUsername (): string|undefined
 	{
-		return this.ctrlUsername.hasError('required')?'You must enter a username.':undefined;
+		return (this.ctrlUsername.hasError('required') && !this.ignoreInvalidUsername)?'You must enter a username.':undefined;
 	}
 
 	getErrorPassword (): string|undefined
@@ -59,13 +78,22 @@ password:string = '';
 
 	onClickReset (event:any): void
 	{
-		this.username = '';
-		this.password = '';
+		this.ctrlUsername.reset();
+		this.ctrlPassword.reset();
+	}
+
+	onClickRetarget (event:any): void
+	{
+		this.ignoreInvalidUsername = true;
+		this.navigate('target');
 	}
 
 	private doLogon (): void
 	{
 		this.showProgress = true;
+
+		if (this.username.trim().length < 1)
+			this.ctrlUsername.setErrors({'You must enter a username.':true});
 
 		this.logon.logon(this.username,this.password).subscribe
 		({

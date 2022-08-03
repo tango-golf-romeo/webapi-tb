@@ -6,6 +6,7 @@ import {Observable,OperatorFunction,of,catchError,tap,map,ObservableInput,retry,
 import {ApiServices,Constants} from '../../include/base/classes/primal/constants';
 import {ActionResultHttp} from '../../include/base/classes/rcv/action-result-http';
 import {HttpUrlOptions} from 'src/app/include/base/classes/primal/http-url-options';
+import {ConfigService} from './config.service';
 
 @Injectable
 ({
@@ -16,13 +17,14 @@ export class TransportService
 private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpress:Constants.HttpRootDevKestrel) +
 	`${Constants.RelativePathWebApi}/`;
   
-  constructor (private http:HttpClient)
+  constructor (private http:HttpClient, private config:ConfigService)
   {
   }
 
 	private get apiPath (): string
 	{
-		return this.m_sApiPath;
+	const ret:string = `${this.config.config.targetAddress.url}${Constants.RelativePathWebApi}/`;
+		return ret;
 	}
 
 	public invokePost<SUCCESS,FAILURE> (svc:ApiServices, op:string|null, opts:HttpUrlOptions|null = null, input:any = {}): Observable<ActionResultHttp<SUCCESS|FAILURE>>

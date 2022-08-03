@@ -6,9 +6,11 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {FaultLogComponent} from './components/fault-log/fault-log.component';
 import {EventLogComponent} from './components/event-log/event-log.component';
 import {ModuleTestsComponent} from './components/module-tests/module-tests.component';
+import {TargetComponent} from './components/target/target.component';
 
 const routes: Routes =
 [
+  {path:'target', component:TargetComponent},
   {path:'logon', component:LogonComponent},
   {path:'dashboard', component:DashboardComponent},
   {path:'fault-log', component:FaultLogComponent},
