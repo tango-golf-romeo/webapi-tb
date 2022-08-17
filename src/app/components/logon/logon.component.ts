@@ -41,8 +41,6 @@ private ignoreInvalidUsername:boolean = false;
   {
     document.title = Constants.Name + " - System Logon";
 
-		this.target = this.config.config.targetAddress.url;
-
 	const obj:any = this.txtUsername;
 		obj?.nativeElement?.focus();
   }

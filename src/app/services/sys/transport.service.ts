@@ -23,7 +23,7 @@ private m_sApiPath:string = (Constants.UseExpress?Constants.HttpRootDevIISExpres
 
 	private get apiPath (): string
 	{
-	const ret:string = `${this.config.config.targetAddress.url}${Constants.RelativePathWebApi}/`;
+	const ret:string = `${this.m_sApiPath}`;
 		return ret;
 	}
 

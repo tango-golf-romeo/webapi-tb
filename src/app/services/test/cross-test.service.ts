@@ -167,7 +167,7 @@ export class CrossTestService
     return true;
   }
 
-  public async testMultiplePins (): Promise<boolean>
+  public async testMultiplePinsAsync (): Promise<boolean>
   {
   const DeleteMeasures:boolean = false;
 
@@ -206,7 +206,7 @@ export class CrossTestService
     return true;
   }
 
-  public async testMultipleIntPins (): Promise<boolean>
+  public async testMultipleIntPinsAsync (): Promise<boolean>
   {
   const DeleteMeasures:boolean = false;
 
@@ -260,6 +260,61 @@ export class CrossTestService
     m3.dataType = 'real';
 
   const content2:AppScriptMeasureContentItem|null = await this.scriptMeasure.setContentAsync(content);
+
+    return true;
+  }
+
+  private async createMeasuresForScriptAsync (sScriptName:string): Promise<boolean>
+  {
+  const DeleteMeasures:boolean = false;
+
+  const scripts:RcvScriptResponseItem[] = await this.script.getAllScriptsAsync();
+  const targetScript:RcvScriptResponseItem|undefined = scripts.find(e => e.name == sScriptName);
+    if (!targetScript) return false;
+
+  const content:AppScriptMeasureContentItem|null = await this.scriptMeasure.getContentAsync(targetScript.scriptID ?? '');
+    if (!content) return false; //we must have the obj
+
+    if (content.measures?.length && DeleteMeasures)
+    {
+    const a = 1; //do something
+    }
+
+    if ((content.measures?.length ?? 0) < 1)
+    {
+      content.measures = [];
+
+      for (let i:number = 0; i < 1000; i++)
+      {
+      const sIdx:string = i.toString().padStart(3,'0');
+      const msr:AppMeasureItem = new AppMeasureItem('tgu msr ' + sIdx,'tgu test measure ' + sIdx);
+        msr.columnName = 'mtgu' + sIdx;
+        msr.dataType = 'int';
+        msr.unit = 'V';
+        msr.orderBy = i + 1;
+
+        content.measures.push(msr);
+      }
+
+    const content2:AppScriptMeasureContentItem|null = await this.scriptMeasure.setContentAsync(content);
+    const lenx = content2?.measures?.length ?? 0; //do something
+    }
+
+    return true;
+  }
+
+  public async testSlms8043Async (): Promise<boolean>
+  {
+    if (! await this.createMeasuresForScriptAsync('slms8043-1000-00.py')) return false;
+    if (! await this.createMeasuresForScriptAsync('slms8043-1000-01.py')) return false;
+    if (! await this.createMeasuresForScriptAsync('slms8043-1000-02.py')) return false;
+    if (! await this.createMeasuresForScriptAsync('slms8043-1000-03.py')) return false;
+    if (! await this.createMeasuresForScriptAsync('slms8043-1000-04.py')) return false;
+    if (! await this.createMeasuresForScriptAsync('slms8043-1000-05.py')) return false;
+    if (! await this.createMeasuresForScriptAsync('slms8043-1000-06.py')) return false;
+    if (! await this.createMeasuresForScriptAsync('slms8043-1000-07.py')) return false;
+    if (! await this.createMeasuresForScriptAsync('slms8043-1000-08.py')) return false;
+    if (! await this.createMeasuresForScriptAsync('slms8043-1000-09.py')) return false;
 
     return true;
   }
